@@ -1,0 +1,45 @@
+{
+  "id": "vauxs-archival",
+  "title": "Vauxs' Archives",
+  "description": "Provides a bare-bones Foundry module template repo to get set up with using the TyphonJS Runtime Library and Svelte with ES Modules.",
+  "version": "0.0.0",
+  "authors": [
+    {
+      "name": "MrVauxs",
+      "url": "https://mrvauxs.net",
+      "discord": "vauxs",
+			"twitter": "@ThatVauxs",
+			"email": "mrvauxs@gmail.com",
+			"ko-fi": "MrVauxs"
+    }
+  ],
+  "compatibility": {
+    "minimum": "11",
+    "verified": "11"
+  },
+  "esmodules": [
+    "index.js"
+  ],
+  "styles": [
+    "style.css"
+  ],
+  "flags": {
+    "hotReload": {
+      "extensions": ["json"],
+      "paths": ["lang"]
+    }
+  },
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "url": "https://github.com/MrVauxs/vauxs-archival",
+  "readme": "https://github.com/MrVauxs/vauxs-archival/blob/master/README.md",
+  "bugs": "https://github.com/MrVauxs/vauxs-archival/issues",
+  "changelog": "https://github.com/MrVauxs/vauxs-archival/releases/latest/",
+  "manifest": "https://github.com/MrVauxs/vauxs-archival/releases/latest/download/module.json",
+  "download": "https://github.com/MrVauxs/vauxs-archival/releases/download/0.0.0/module.zip"
+}
