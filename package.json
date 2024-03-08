@@ -18,11 +18,17 @@
   "devDependencies": {
     "@typhonjs-config/eslint-config": "^0.6.0",
     "@typhonjs-fvtt/eslint-config-foundry.js": "^0.8.0",
+    "autoprefixer": "^10.4.18",
     "eslint": "^8",
+    "postcss": "^8.4.35",
     "svelte-preprocess": "^5",
+    "tailwindcss": "^3.4.1",
     "vite": "^4.4.0"
   },
-  "browserslist": [">5%", "not IE 11"],
+  "browserslist": [
+    ">5%",
+    "not IE 11"
+  ],
   "scripts": {
     "build": "vite build",
     "dev": "vite",
