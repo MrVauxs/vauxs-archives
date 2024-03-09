@@ -61,16 +61,19 @@
 					</button>
 				{/each}
 			</div>
-			<!-- Buttons -->
-			<div class="flex flex-row p-0.5">
-				<button class="" on:click={createArchive}>{i("create")}</button>
-				<button class="w-8 [&>i]:m-0.5" data-tooltip={i("add")} on:click={addArchive}>
-					<i class="fa fa-file-import" />
-				</button>
-				<button class="w-8 [&>i]:m-0.5" data-tooltip={i("remove")} on:click={removeArchive}>
-					<i class="fa fa-trash" />
-				</button>
-			</div>
+			<!-- svelte-ignore missing-declaration -->
+			{#if game.user.isGM}
+				<!-- Buttons -->
+				<div class="flex flex-row p-0.5">
+					<button class="" on:click={createArchive}>{i("create")}</button>
+					<button class="w-8 [&>i]:m-0.5" data-tooltip={i("add")} on:click={addArchive}>
+						<i class="fa fa-file-import" />
+					</button>
+					<button class="w-8 [&>i]:m-0.5" data-tooltip={i("remove")} on:click={removeArchive}>
+						<i class="fa fa-trash" />
+					</button>
+				</div>
+			{/if}
 		</div>
 		<div class="w-full">
 			{#if selectedArchive}
@@ -92,5 +95,9 @@
 
 	.muted {
 		background-color: rgba(128, 128, 128, 0.25);
+	}
+
+	.active {
+		background-color: rgba(0, 225, 255, 0.25);
 	}
 </style>
