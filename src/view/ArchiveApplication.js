@@ -27,8 +27,7 @@ export default class ArchiveApplication extends SvelteApplication {
 	_getHeaderButtons() {
 		const buttons = super._getHeaderButtons();
 		buttons.unshift({
-			icon: "fas fa-coffee",
-			class: "kofi",
+			icon: "fas fa-mug-hot ko-fi",
 			label: "vauxs-archival.support",
 			onclick: () => {
 				window.open("https://ko-fi.com/mrvauxs", "_blank");
