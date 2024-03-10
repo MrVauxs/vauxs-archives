@@ -7,6 +7,8 @@ import { terserConfig } from "@typhonjs-fvtt/runtime/rollup";
 import autoprefixer from "autoprefixer";
 import tailwindcss from "tailwindcss";
 import * as path from "path";
+import nesting from "tailwindcss/nesting";
+import minify from "postcss-minify"; // not typed, but the entire thing is tiny
 
 // ATTENTION!
 // Please modify the below variables: s_PACKAGE_ID and s_SVELTE_HASH_ID appropriately.
@@ -51,7 +53,7 @@ export default () => {
 			postcss: {
 				inject: false,
 				sourceMap: s_SOURCEMAPS,
-				plugins: [tailwindcss, autoprefixer],
+				plugins: [nesting, tailwindcss, autoprefixer, minify],
 			},
 		},
 
