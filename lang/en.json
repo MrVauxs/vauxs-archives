@@ -23,6 +23,6 @@
     },
     "create": "Create an Archive",
     "add": "Add an existing Archive",
-    "remove": "Remove an Archive"
+    "remove": "Remove selected Archive"
   }
 }

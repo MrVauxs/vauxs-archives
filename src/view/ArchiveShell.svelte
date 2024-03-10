@@ -13,9 +13,11 @@
 	function createArchive() {
 		archives.update((value) => {
 			value.push({
+				id: foundry.utils.randomID(),
 				title: "New Archive; " + Math.random().toString(36).substr(2, 5),
 				timestamp: Date.now(),
 				description: "New archive description",
+				location: "",
 			});
 			return value;
 		});
@@ -26,13 +28,12 @@
 	}
 
 	function removeArchive() {
+		// TODO: Confirm dialog
 		archives.update((value) => {
-			const popped = value.pop();
+			const index = value.findIndex((archive) => archive.id === selectedArchive.id);
+			value.splice(index, 1);
 
-			if (selectedArchive === popped) {
-				selectedArchive = null;
-			}
-
+			selectedArchive = null;
 			return value;
 		});
 	}
@@ -69,7 +70,12 @@
 					<button class="w-8 [&>i]:m-0.5" data-tooltip={i("add")} on:click={addArchive}>
 						<i class="fa fa-file-import" />
 					</button>
-					<button class="w-8 [&>i]:m-0.5" data-tooltip={i("remove")} on:click={removeArchive}>
+					<button
+						class="w-8 [&>i]:m-0.5"
+						data-tooltip={i("remove")}
+						on:click={removeArchive}
+						disabled={!selectedArchive}
+					>
 						<i class="fa fa-trash" />
 					</button>
 				</div>
