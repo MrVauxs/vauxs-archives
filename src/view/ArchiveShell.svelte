@@ -104,6 +104,8 @@
 	}
 
 	.active {
-		background-color: rgba(0, 225, 255, 0.25);
+		border: 1px solid var(--color-border-highlight-alt);
+
+		box-shadow: 0 0 5px inset var(--color-shadow-highlight);
 	}
 </style>
