@@ -3,7 +3,7 @@
 <script>
 	import { ApplicationShell } from "#runtime/svelte/component/core";
 	import { settings } from "$lib/settings.js";
-	import { i } from "$lib/utils.js";
+	import { i, validateObject } from "$lib/utils.js";
 	import { getContext } from "svelte";
 	import { TJSDialog } from "#runtime/svelte/application";
 	import ArchiveCreator from "./ArchiveCreator.svelte";
@@ -14,34 +14,42 @@
 	const archives = settings.getStore("archives");
 	const storeTitle = application.reactive.storeAppOptions.title;
 
-	async function createArchive(initial = {}) {
-		/**
-		 * @type {Result}
-		 * @typedef {object} Result
-		 * @property {string} title
-		 */
+	async function createArchive(event, input) {
+		const id = foundry.utils.randomID();
+		const data = foundry.utils.mergeObject(
+			{
+				id,
+				title: "New Archive; " + new Date(Date.now()).toDateString(),
+				timestamp: Date.now(),
+				description: "",
+				location: `worlds/${game.world.id}/chat-archive/${id}.json`,
+			},
+			input,
+		);
+
 		const result = await TJSDialog.wait({
+			// modal: true,
 			title: i("modal.remove.title"),
-			draggable: false,
-			minimizable: false,
-			modal: true,
-			content: ArchiveCreator,
+			zIndex: 1000,
+			content: { class: ArchiveCreator, props: { data, event } },
 		});
 
-		console.log(result.title);
+		const validated = validateObject(
+			{
+				id: "string",
+				title: "string",
+				timestamp: "number",
+				description: "string",
+				location: "string",
+			},
+			result,
+		);
 
-		archives.update((value) => {
-			return [
-				...value,
-				{
-					id: foundry.utils.randomID(),
-					title: "New Archive; " + Math.random().toString(36).substr(2, 5),
-					timestamp: Date.now(),
-					description: "New archive description",
-					location: "",
-				},
-			];
-		});
+		if (validated) {
+			archives.update((value) => {
+				return [...value, result];
+			});
+		}
 	}
 
 	async function addArchive() {
@@ -135,18 +143,12 @@
 </ApplicationShell>
 
 <style lang="postcss">
-	.foundry-border {
-		@apply border-2 rounded-sm;
-		border: 1px solid var(--color-border-light-primary);
-	}
-
 	.muted {
 		background-color: rgba(128, 128, 128, 0.25);
 	}
 
 	.active {
 		border: 1px solid var(--color-border-highlight-alt);
-
 		box-shadow: 0 0 5px inset var(--color-shadow-highlight);
 	}
 </style>

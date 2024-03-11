@@ -36,9 +36,7 @@
       },
       "remove": {
         "title": "Remove an Archive",
-        "yes": "Yes",
-        "cancel": "Cancel",
-        "content": "Are you sure you want to remove <i>\"{title}\"</i> archive?<p/>This does <b>not</b> remove the file from your system. You can add it back using the \"Add an Archive\" button. To permanently remove it, delete the file from your file system."
+        "content": "Are you sure you want to remove the following archive?<p/><i>\"{title}\"</i><p/>This does <b>not</b> remove the file from your system. You can add it back using the \"Add an Archive\" button. To permanently remove it, after removing it here delete the file from your file system."
       }
     }
   }

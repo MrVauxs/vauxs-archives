@@ -22,7 +22,7 @@ const s_PACKAGE_ID = "modules/vauxs-archival";
 // by shortening 'template-svelte-esm'.
 const s_SVELTE_HASH_ID = "varch";
 
-const s_COMPRESS = false; // Set to true to compress the module bundle.
+const s_COMPRESS = true; // Set to true to compress the module bundle.
 const s_SOURCEMAPS = true; // Generate sourcemaps for the bundle (recommended).
 
 // Used in bundling particularly during development. If you npm-link packages to your project add them here.

@@ -13,3 +13,26 @@ export function i(string, extra) {
 	return game.i18n.localize(string);
 }
 
+/**
+ * Validates an object based on required properties.
+ *
+ * @param {obj} schema - The schema to be used for validation.
+ *
+ * @param {object} obj - The object to be validated.
+ *
+ * @returns {boolean} True if the object is valid, false otherwise.
+ */
+export function validateObject(schema, obj) {
+	if (typeof obj !== "object" || obj === null) {
+		return false;
+	}
+
+	for (const key in schema) {
+		if (!Object.prototype.hasOwnProperty.call(obj, key) || typeof obj[key] !== schema[key]) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
