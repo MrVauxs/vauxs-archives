@@ -9,9 +9,7 @@
  */
 export function i(string, extra) {
 	string = `vauxs-archival.${string.trim()}`;
-	if (extra) {
-		return game.i18n.format(string, extra);
-	}
+	if (extra) return game.i18n.format(string, extra);
 	return game.i18n.localize(string);
 }
 

@@ -4,41 +4,82 @@
 	import { ApplicationShell } from "#runtime/svelte/component/core";
 	import { settings } from "$lib/settings.js";
 	import { i } from "$lib/utils.js";
-	/* const { application } = getContext("#external"); */
+	import { getContext } from "svelte";
+	import { TJSDialog } from "#runtime/svelte/application";
+	import ArchiveCreator from "./ArchiveCreator.svelte";
+	const { application } = getContext("#external");
 
 	export let elementRoot;
 
 	const archives = settings.getStore("archives");
+	const storeTitle = application.reactive.storeAppOptions.title;
 
-	function createArchive() {
+	async function createArchive(initial = {}) {
+		/**
+		 * @type {Result}
+		 * @typedef {object} Result
+		 * @property {string} title
+		 */
+		const result = await TJSDialog.wait({
+			title: i("modal.remove.title"),
+			draggable: false,
+			minimizable: false,
+			modal: true,
+			content: ArchiveCreator,
+		});
+
+		console.log(result.title);
+
 		archives.update((value) => {
-			value.push({
-				id: foundry.utils.randomID(),
-				title: "New Archive; " + Math.random().toString(36).substr(2, 5),
-				timestamp: Date.now(),
-				description: "New archive description",
-				location: "",
+			return [
+				...value,
+				{
+					id: foundry.utils.randomID(),
+					title: "New Archive; " + Math.random().toString(36).substr(2, 5),
+					timestamp: Date.now(),
+					description: "New archive description",
+					location: "",
+				},
+			];
+		});
+	}
+
+	async function addArchive() {
+		const fp = new FilePicker({ callback: (result) => console.log(result) });
+		await fp.browse();
+	}
+
+	async function removeArchive() {
+		if (!selectedArchive) {
+			ui.notifications.error("No archive is selected!");
+			return;
+		}
+
+		/**
+		 * @type {boolean|null}
+		 */
+		const result = await TJSDialog.confirm({
+			title: i("modal.remove.title"),
+			draggable: false,
+			minimizable: false,
+			modal: true,
+			closeOnInput: true,
+			content: i("modal.remove.content", { title: selectedArchive.title }),
+		});
+
+		if (result) {
+			archives.update((value) => {
+				value = value.filter((archive) => archive.id !== selectedArchive.id);
+
+				selectedArchive = null;
+				return value;
 			});
-			return value;
-		});
-	}
-
-	function addArchive() {
-		ui.notifications.info("addArchive");
-	}
-
-	function removeArchive() {
-		// TODO: Confirm dialog
-		archives.update((value) => {
-			const index = value.findIndex((archive) => archive.id === selectedArchive.id);
-			value.splice(index, 1);
-
-			selectedArchive = null;
-			return value;
-		});
+		}
 	}
 
 	let selectedArchive = null;
+
+	$: if (selectedArchive) storeTitle.set(i("title") + " - " + selectedArchive.title);
 </script>
 
 <ApplicationShell bind:elementRoot>
