@@ -36,3 +36,8 @@ export function validateObject(schema, obj) {
 	return true;
 }
 
+/**
+ * @type {boolean} Whether the current environment is a development environment.
+ */
+export const dev = import.meta.env.DEV;
+

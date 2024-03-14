@@ -2,33 +2,57 @@
 
 <script>
 	import { getContext } from "svelte";
+	import { dev } from "$lib/utils.js";
 	export let data;
 	const promise = getContext("#managedPromise");
 	const { application } = getContext("#external");
 
-	function resolve() {
-		promise.resolve(data);
-		application.close();
+	async function resolve() {
+		const success = await archiveMessages(data);
+		if (success) {
+			promise.resolve(data);
+			application.close();
+		} else {
+			ui.notifications.error("Failed to archive messages. See console log for details.");
+			throw Error(`"Failed to archive messages. ${JSON.stringify(data)}`);
+		}
 	}
 
-	function archiveMessages() {
-		// ChatMessage.deleteDocuments(messageIDs);
+	async function archiveMessages() {
+		ui.notifications.info("Archiving messages...");
+
+		const json = JSON.stringify({ data, messages }, null, "\t");
+		const file = new File([json], `${data.id}.json`, { type: "application/json" });
+		const folderPath = data.location.split("/").slice(0, -1).join("/");
+		const worldPath = folderPath.split("/").slice(0, -1).join("/");
+
+		// Check if chat-archives folder exists, create if not.
+		await FilePicker.browse("data", worldPath).then(async (result) => {
+			if (!result.dirs.includes(folderPath)) {
+				await FilePicker.createDirectory("data", folderPath);
+			}
+		});
+
+		FilePicker.upload("data", folderPath, file).then((res) => {
+			if (res && res.status === "success" && deleteMessages)
+				ChatMessage.deleteDocuments(messages.map((message) => message.id));
+		});
+
+		return true;
 	}
 
 	let deleteMessages = false;
 	let archiveAll = false;
-	let messageIDs = game.messages.map((message) => message.id);
+	let messages = game.messages.contents;
 
 	let from = new Date(game.messages.contents.at(0).timestamp).toISOString().slice(0, 16);
 	let to = new Date(game.messages.contents.at(-1).timestamp).toISOString().slice(0, 16);
 
-	$: if (archiveAll) messageIDs = game.messages.map((message) => message.id);
+	$: if (archiveAll) messages = game.messages.contents;
 	$: if (!archiveAll) {
-		messageIDs = game.messages
-			.filter((message) => {
-				return message.timestamp >= new Date(from).getTime() && message.timestamp <= new Date(to).getTime();
-			})
-			.map((message) => message.id);
+		messages = game.messages.contents.filter((message) => {
+			return message.timestamp >= new Date(from).getTime() && message.timestamp <= new Date(to).getTime();
+		});
 	}
 </script>
 
@@ -99,6 +123,9 @@
 			-->
 	</div>
 	<div>
-		<button on:click={resolve} disabled={!messageIDs.length}>Archive {messageIDs.length} Messages</button>
+		<!-- svelte-ignore missing-declaration -->
+		<button on:click={resolve} disabled={!messages.length}>
+			Archive {messages.length} / {game.messages.size} Messages
+		</button>
 	</div>
 </div>

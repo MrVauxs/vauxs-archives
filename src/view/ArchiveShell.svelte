@@ -29,7 +29,7 @@
 
 		const result = await TJSDialog.wait({
 			// modal: true,
-			title: i("modal.remove.title"),
+			title: i("modal.create.title"),
 			zIndex: 1000,
 			content: { class: ArchiveCreator, props: { data, event } },
 		});
@@ -53,7 +53,7 @@
 	}
 
 	async function addArchive() {
-		const fp = new FilePicker({ callback: (result) => console.log(result) });
+		const fp = new FilePicker({ current: `worlds/${game.world.id}`, callback: (result) => console.log(result) });
 		await fp.browse();
 	}
 
@@ -68,6 +68,7 @@
 		 */
 		const result = await TJSDialog.confirm({
 			title: i("modal.remove.title"),
+			headerIcon: "modules/vauxs-archival/assets/Warn16px.png",
 			draggable: false,
 			minimizable: false,
 			modal: true,
