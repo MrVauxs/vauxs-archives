@@ -3,12 +3,6 @@ import { SvelteApplication } from "#runtime/svelte/application";
 import ArchiveShell from "./ArchiveShell.svelte";
 
 export default class ArchiveApplication extends SvelteApplication {
-	/**
-	 * Default Application options
-	 *
-	 * @returns {object} options - Application options.
-	 * @see https://foundryvtt.com/api/Application.html#options
-	 */
 	static get defaultOptions() {
 		return foundry.utils.mergeObject(super.defaultOptions, {
 			title: "vauxs-archival.title", // Automatically localized from `lang/en.json`.

@@ -16,7 +16,7 @@ export function i(string, extra) {
 /**
  * Validates an object based on required properties.
  *
- * @param {obj} schema - The schema to be used for validation.
+ * @param {object} schema - The schema to be used for validation.
  *
  * @param {object} obj - The object to be validated.
  *
