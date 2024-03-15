@@ -1,5 +1,6 @@
 /* eslint-env node */
 
+import { defineConfig, loadEnv } from 'vite'
 import { svelte } from "@sveltejs/vite-plugin-svelte";
 import resolve from "@rollup/plugin-node-resolve"; // This resolves NPM modules from node_modules.
 import preprocess from "svelte-preprocess";
@@ -31,8 +32,8 @@ const s_RESOLVE_CONFIG = {
 	dedupe: ["svelte"],
 };
 
-export default () => {
-	/** @type {import('vite').UserConfig} */
+export default defineConfig(({command, mode}) => {
+	const env = loadEnv(mode, process.cwd(), '')
 	return {
 		root: "src/", // Source location / esbuild root.
 		base: `/${s_PACKAGE_ID}/`, // Base module path that 30001 / served dev directory.
@@ -67,17 +68,17 @@ export default () => {
 		// resources served with this particular Vite configuration. Modify the proxy rule as necessary for your
 		// static resources / project.
 		server: {
-			port: 30011,
+			port: env.DEV_PORT ?? 30011,
 			open: "/game",
 			proxy: {
 				// Serves static files from main Foundry server.
-				[`^(/${s_PACKAGE_ID}/(assets|lang|packs|style.css))`]: "http://localhost:30001",
+				[`^(/${s_PACKAGE_ID}/(assets|lang|packs|style.css))`]: "http://localhost:" + env.GAME_PORT ?? 30001,
 
 				// All other paths besides package ID path are served from main Foundry server.
-				[`^(?!/${s_PACKAGE_ID}/)`]: "http://localhost:30001",
+				[`^(?!/${s_PACKAGE_ID}/)`]: "http://localhost:" + env.GAME_PORT ?? 30001,
 
 				// Enable socket.io from main Foundry server.
-				"/socket.io": { target: "ws://localhost:30001", ws: true },
+				"/socket.io": { target: "ws://localhost:" + env.GAME_PORT ?? 30001, ws: true },
 			},
 		},
 
@@ -119,5 +120,5 @@ export default () => {
 			resolve(s_RESOLVE_CONFIG), // Necessary when bundling npm-linked packages.
 		],
 	};
-};
+});
 
