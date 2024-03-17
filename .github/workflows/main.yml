@@ -54,17 +54,15 @@ jobs:
             # Upload workflow 
             - uses: actions/upload-artifact@v4
               with:
-                name: module
+                name: manifest
                 path: module.json
     upload:
         needs: build
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@master
-            
             - uses: actions/download-artifact@v4
               with:
-                name: module
+                name: manifest
 
             # Publish to FoundryVTT
             - name: Publish to Foundry VTT Repo
