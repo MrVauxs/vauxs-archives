@@ -76,6 +76,9 @@
 							props: {
 								data: dataObj({
 									timestamp: new Date(response.lastModified).getTime(),
+									title: response.json?.name,
+									description: response.json?.description,
+									id: response.json?.id,
 									...response.json?.data,
 									location,
 								}),
