@@ -41,3 +41,30 @@ export function validateObject(schema, obj) {
  */
 export const dev = import.meta.env.DEV;
 
+/**
+ * Get JSON from path.
+ *
+ * @param {string} path - The url to get JSON from.
+ *
+ * @returns {Promise<object|false>} The JSON object.
+ */
+export async function getJSON(path) {
+	try {
+		const response = await fetch(path);
+		const json = await response.json();
+		return { json, lastModified: response.headers.get("last-modified") };
+	} catch (error) {
+		ui.notifications.error("Could not load JSON. Check the console for more information.");
+		if (path.includes("%20")) {
+			ui.notifications.warn(
+				"Your file contains spaces. Try renaming the file to remove the spaces with <code class='varch-code'>%20</code> or <code class='varch-code'>-</code>.",
+				{
+					permanent: true,
+				}
+			);
+		}
+		console.error(error);
+		return false;
+	}
+}
+

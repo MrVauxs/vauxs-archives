@@ -1,9 +1,8 @@
 <svelte:options accessors={true} />
 
 <script>
-	import { getContext } from "svelte";
-	import { dev } from "$lib/utils.js";
 	export let data;
+	import { getContext } from "svelte";
 	const promise = getContext("#managedPromise");
 	const { application } = getContext("#external");
 
@@ -56,7 +55,7 @@
 	}
 </script>
 
-<div id="vauxs-tw">
+<div id="vauxs-archive">
 	<div
 		class="grid grid-cols-5 gap-1 text-center mb-1 [&_label]:leading-6 [&>label]:col-span-2 [&>input]:col-span-3 [&_input]:h-6 [&_input]:mt-0"
 	>

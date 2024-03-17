@@ -2,30 +2,38 @@
 
 <script>
 	import { ApplicationShell } from "#runtime/svelte/component/core";
-	import { settings } from "$lib/settings.js";
-	import { i, validateObject } from "$lib/utils.js";
+	import { settings, archives } from "$lib/settings.js";
+	import { i, validateObject, getJSON } from "$lib/utils.js";
 	import { getContext } from "svelte";
 	import { TJSDialog } from "#runtime/svelte/application";
 	import ArchiveCreator from "./ArchiveCreator.svelte";
+	import ArchiveEditor from "./ArchiveEditor.svelte";
 	const { application } = getContext("#external");
 
 	export let elementRoot;
 
-	const archives = settings.getStore("archives");
 	const storeTitle = application.reactive.storeAppOptions.title;
+	const loadLastArchive = settings.getStore("loadLastArchive");
 
-	async function createArchive(event, input) {
+	function dataObj(input = {}) {
 		const id = foundry.utils.randomID();
 		const data = foundry.utils.mergeObject(
 			{
 				id,
-				title: "New Archive; " + new Date(Date.now()).toDateString(),
+				title: `Archive ${id.slice(0, 4)}; ${new Date(Date.now()).toDateString()}`,
 				timestamp: Date.now(),
 				description: "",
 				location: `worlds/${game.world.id}/chat-archive/${id}.json`,
 			},
 			input,
 		);
+		return data;
+	}
+
+	async function createArchive(event, input) {
+		const data = dataObj(input);
+
+		if (!game.messages.size) return ui.notifications.error("No messages found!");
 
 		const result = await TJSDialog.wait({
 			// modal: true,
@@ -47,14 +55,37 @@
 
 		if (validated) {
 			archives.update((value) => {
-				return [...value, result];
+				return value.set(result.id, result);
 			});
 		}
 	}
 
 	async function addArchive() {
-		const fp = new FilePicker({ current: `worlds/${game.world.id}`, callback: (result) => console.log(result) });
-		await fp.browse();
+		const fp = new FilePicker({
+			current: `worlds/${game.world.id}`,
+			type: "text",
+			callback: async (location) => {
+				const response = await getJSON(location);
+
+				if (!!response)
+					TJSDialog.wait({
+						title: i("modal.create.title"),
+						zIndex: 1000,
+						content: {
+							class: ArchiveEditor,
+							props: {
+								data: dataObj({
+									timestamp: new Date(response.lastModified).getTime(),
+									...response.json?.data,
+									location,
+								}),
+							},
+						},
+					});
+			},
+		});
+
+		fp.browse();
 	}
 
 	async function removeArchive() {
@@ -64,7 +95,7 @@
 		}
 
 		/**
-		 * @type {boolean|null}
+		 * @type {boolean|null} result
 		 */
 		const result = await TJSDialog.confirm({
 			title: i("modal.remove.title"),
@@ -78,28 +109,27 @@
 
 		if (result) {
 			archives.update((value) => {
-				value = value.filter((archive) => archive.id !== selectedArchive.id);
-
+				value.delete(selectedArchive.id);
 				selectedArchive = null;
 				return value;
 			});
 		}
 	}
 
-	let selectedArchive = null;
+	let selectedArchive = $loadLastArchive ? $archives.values().next().value : null;
 
 	$: if (selectedArchive) storeTitle.set(i("title") + " - " + selectedArchive.title);
 </script>
 
 <ApplicationShell bind:elementRoot>
 	<main class="max-h-full h-full flex flex-row gap-0.5">
-		<div class="w-[350px] foundry-border flex flex-col" class:muted={$archives.length === 0}>
+		<div class="w-[350px] foundry-border flex flex-col" class:muted={$archives.size === 0}>
 			<!-- Archive List -->
 			<div class="h-full p-1 gap-1 flex flex-col overflow-y-scroll overflow-x-hidden">
-				{#if $archives.length === 0}
+				{#if $archives.size === 0}
 					<i class="h-full align-center flex items-center justify-center"> {i("noArchive.found")} </i>
 				{/if}
-				{#each $archives as archive}
+				{#each $archives as [id, archive]}
 					<button
 						class="relative min-h-16"
 						on:click={() => (selectedArchive = archive)}
@@ -133,7 +163,24 @@
 		</div>
 		<div class="w-full">
 			{#if selectedArchive}
-				<div>{JSON.stringify(selectedArchive)}</div>
+				{console.log(selectedArchive) || ""}
+				{#await getJSON(selectedArchive.location)}
+					<div class="h-full align-center flex items-center justify-center">
+						<i class="fa fa-spinner fa-spin" />
+					</div>
+				{:then response}
+					<div class="h-full overflow-y-scroll flex flex-col gap-2">
+						{#each response.json.messages || response.json as message}
+							<div
+								class="border border-solid border-slate-500 bg-slate-300/50 w-full min-h-16 p-2 rounded-md"
+							>
+								{@html message.content}
+							</div>
+						{/each}
+					</div>
+				{:catch error}
+					<pre>{error}</pre>
+				{/await}
 			{:else}
 				<i class="h-full align-center muted foundry-border flex items-center justify-center">
 					{i("noArchive.selected")}

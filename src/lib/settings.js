@@ -1,4 +1,5 @@
 import { TJSGameSettings } from "#runtime/svelte/store/fvtt/settings";
+import { writable, get } from "svelte/store";
 import { ArchiveShim } from "../view/ArchiveApplication";
 
 export const mId = "vauxs-archival";
@@ -50,6 +51,8 @@ const array = [
 	},
 ];
 
+export const archives = writable(new Map([]));
+
 /**
  * Registers the settings.
  */
@@ -62,6 +65,22 @@ export function registerSettings() {
 		label: "vauxs-archival.settings.archive.button",
 		icon: "fas fa-message",
 		type: ArchiveShim,
+	});
+
+	archives.set(new Map(game.settings.get("vauxs-archival", "archives")));
+
+	game.modules.get(mId).api = {
+		get archivesMap() {
+			return get(archives);
+		},
+		get archivesSetting() {
+			return game.settings.get("vauxs-archival", "archives");
+		},
+	};
+
+	archives.subscribe((value) => {
+		console.log("Updating archives", value);
+		game.settings.set("vauxs-archival", "archives", Array.from(value));
 	});
 }
 
