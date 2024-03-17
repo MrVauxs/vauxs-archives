@@ -59,6 +59,7 @@ jobs:
     upload:
         needs: build
         runs-on: ubuntu-latest
+        if: ${{ github.event.release.prerelease }}
         steps:
             - uses: actions/download-artifact@v4
               with:
@@ -66,7 +67,7 @@ jobs:
 
             # Publish to FoundryVTT
             - name: Publish to Foundry VTT Repo
-              if: ${{ !github.event.release.prerelease && Boolean(secrets.FOUNDRY_ADMIN_PASSWORD) }}
+              if: ${{ secrets.FOUNDRY_ADMIN_USERNAME }}
               id: publish_foundry_repo
               run: npx @ghost-fvtt/foundry-publish@3.0.0
               env:
