@@ -23,7 +23,7 @@
 				title: `Archive ${id.slice(0, 4)}; ${new Date(Date.now()).toDateString()}`,
 				timestamp: Date.now(),
 				description: "",
-				location: `worlds/${game.world.id}/chat-archive/${id}.json`,
+				location: `worlds/${game.world.id}/chat-archives/${id}.json`,
 			},
 			input,
 		);
