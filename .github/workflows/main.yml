@@ -50,34 +50,34 @@ jobs:
                   artifacts: "./module.json, ./module.zip"
                   tag: ${{ github.event.release.tag_name }}
                   body: ${{ github.event.release.body }}
-            
-            # Upload workflow 
+
+            # Upload workflow
             - uses: actions/upload-artifact@v4
               with:
-                name: manifest
-                path: module.json
+                  name: manifest
+                  path: module.json
     upload:
         needs: build
         runs-on: ubuntu-latest
         steps:
             - name: "check is MY_SECRET exists"
-              env: 
-                super_secret: ${{ secrets.MY_SECRET }}
+              env:
+                  super_secret: ${{ secrets.FOUNDRY_ADMIN_USERNAME }}
               if: ${{ env.super_secret == '' }}
-              run: 'echo "echo The FoundryVTT login secrets have not been made; echo please go to \"settings \> secrets \> actions\" to create it"
+              run: 'echo "echo The FoundryVTT login secrets have not been made; echo please go to \"settings \> secrets \> actions\" to create it"'
 
             - uses: actions/download-artifact@v4
               with:
-                name: manifest
+                  name: manifest
 
             # Publish to FoundryVTT
             - name: Publish to Foundry VTT Repo
               id: publish_foundry_repo
               run: npx @ghost-fvtt/foundry-publish@3.0.0
-              if: ${{ FVTT_USERNAME }}
               env:
                   FVTT_MANIFEST_PATH: "module.json"
                   FVTT_USERNAME: ${{ secrets.FOUNDRY_ADMIN_USERNAME }}
                   FVTT_PASSWORD: ${{ secrets.FOUNDRY_ADMIN_PASSWORD }}
                   FVTT_MANIFEST_URL: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/module.json
+              if: ${{ env.FVTT_USERNAME }}
 
