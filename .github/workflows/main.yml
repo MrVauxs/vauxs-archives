@@ -60,7 +60,7 @@ jobs:
         needs: build
         runs-on: ubuntu-latest
         steps:
-            - name: "check is MY_SECRET exists"
+            - name: Check for login info
               env:
                   super_secret: ${{ secrets.FOUNDRY_ADMIN_USERNAME }}
               if: ${{ env.super_secret == '' }}
