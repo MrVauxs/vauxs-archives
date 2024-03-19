@@ -102,7 +102,7 @@
 		 */
 		const result = await TJSDialog.confirm({
 			title: i("modal.remove.title"),
-			headerIcon: "modules/vauxs-archival/assets/Warn16px.png",
+			headerIcon: "modules/vauxs-archives/assets/Warn16px.png",
 			draggable: false,
 			minimizable: false,
 			modal: true,

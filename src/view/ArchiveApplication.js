@@ -5,11 +5,11 @@ import ArchiveShell from "./ArchiveShell.svelte";
 export default class ArchiveApplication extends SvelteApplication {
 	static get defaultOptions() {
 		return foundry.utils.mergeObject(super.defaultOptions, {
-			title: "vauxs-archival.title", // Automatically localized from `lang/en.json`.
+			title: "vauxs-archives.title", // Automatically localized from `lang/en.json`.
 			id: "vauxs-archive",
 			width: 900,
 			height: 600,
-			headerIcon: "modules/vauxs-archival/assets/Face16px.gif",
+			headerIcon: "modules/vauxs-archives/assets/Face16px.gif",
 			resizable: true,
 			svelte: {
 				class: ArchiveShell,
@@ -22,7 +22,7 @@ export default class ArchiveApplication extends SvelteApplication {
 		const buttons = super._getHeaderButtons();
 		buttons.unshift({
 			icon: "fas fa-mug-hot ko-fi",
-			label: "vauxs-archival.support",
+			label: "vauxs-archives.support",
 			onclick: () => {
 				window.open("https://ko-fi.com/mrvauxs", "_blank");
 			},

@@ -1,6 +1,6 @@
 /* eslint-env node */
 
-import { defineConfig, loadEnv } from 'vite'
+import { defineConfig, loadEnv } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
 import resolve from "@rollup/plugin-node-resolve"; // This resolves NPM modules from node_modules.
 import preprocess from "svelte-preprocess";
@@ -16,7 +16,7 @@ import minify from "postcss-minify"; // not typed, but the entire thing is tiny
 
 // For convenience, you just need to modify the package ID below as it is used to fill in default proxy settings for
 // the dev server.
-const s_PACKAGE_ID = "modules/vauxs-archival";
+const s_PACKAGE_ID = "modules/vauxs-archives";
 
 // A short additional string to add to Svelte CSS hash values to make yours unique. This reduces the amount of
 // duplicated framework CSS overlap between many TRL packages enabled on Foundry VTT at the same time. 'tse' is chosen
@@ -32,8 +32,8 @@ const s_RESOLVE_CONFIG = {
 	dedupe: ["svelte"],
 };
 
-export default defineConfig(({command, mode}) => {
-	const env = loadEnv(mode, process.cwd(), '')
+export default defineConfig(({ command, mode }) => {
+	const env = loadEnv(mode, process.cwd(), "");
 	return {
 		root: "src/", // Source location / esbuild root.
 		base: `/${s_PACKAGE_ID}/`, // Base module path that 30001 / served dev directory.

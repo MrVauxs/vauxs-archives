@@ -2,7 +2,7 @@ import { TJSGameSettings } from "#runtime/svelte/store/fvtt/settings";
 import { writable, get } from "svelte/store";
 import { ArchiveShim } from "../view/ArchiveApplication";
 
-export const mId = "vauxs-archival";
+export const mId = "vauxs-archives";
 
 /**
  * @type {TJSGameSettings}
@@ -15,8 +15,8 @@ const array = [
 		namespace: mId,
 		key: "loadLastArchive",
 		options: {
-			name: "vauxs-archival.settings.loadLastArchive.title",
-			hint: "vauxs-archival.settings.loadLastArchive.hint",
+			name: "vauxs-archives.settings.loadLastArchive.title",
+			hint: "vauxs-archives.settings.loadLastArchive.hint",
 			scope: "user",
 			config: true,
 			type: Boolean,
@@ -28,8 +28,8 @@ const array = [
 		namespace: mId,
 		key: "replaceButtons",
 		options: {
-			name: "vauxs-archival.settings.replaceButtons.title",
-			hint: "vauxs-archival.settings.replaceButtons.hint",
+			name: "vauxs-archives.settings.replaceButtons.title",
+			hint: "vauxs-archives.settings.replaceButtons.hint",
 			scope: "world",
 			config: true,
 			type: Boolean,
@@ -41,8 +41,8 @@ const array = [
 		namespace: mId,
 		key: "archives",
 		options: {
-			name: "vauxs-archival.settings.archives.title",
-			hint: "vauxs-archival.settings.archives.hint",
+			name: "vauxs-archives.settings.archives.title",
+			hint: "vauxs-archives.settings.archives.hint",
 			scope: "world",
 			config: false,
 			type: Array,
@@ -60,27 +60,27 @@ export function registerSettings() {
 	settings.registerAll(array);
 
 	game.settings.registerMenu(mId, "chat-archive", {
-		name: "vauxs-archival.settings.archive.title",
-		hint: "vauxs-archival.settings.archive.hint",
-		label: "vauxs-archival.settings.archive.button",
+		name: "vauxs-archives.settings.archive.title",
+		hint: "vauxs-archives.settings.archive.hint",
+		label: "vauxs-archives.settings.archive.button",
 		icon: "fas fa-message",
 		type: ArchiveShim,
 	});
 
-	archives.set(new Map(game.settings.get("vauxs-archival", "archives")));
+	archives.set(new Map(game.settings.get("vauxs-archives", "archives")));
 
 	game.modules.get(mId).api = {
 		get archivesMap() {
 			return get(archives);
 		},
 		get archivesSetting() {
-			return game.settings.get("vauxs-archival", "archives");
+			return game.settings.get("vauxs-archives", "archives");
 		},
 	};
 
 	archives.subscribe((value) => {
 		console.log("Updating archives", value);
-		game.settings.set("vauxs-archival", "archives", Array.from(value));
+		game.settings.set("vauxs-archives", "archives", Array.from(value));
 	});
 }
 
