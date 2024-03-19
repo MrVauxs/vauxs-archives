@@ -23,7 +23,7 @@ const array = [
 			default: false,
 		},
 	},
-	{
+	/* {
 		folder: mId,
 		namespace: mId,
 		key: "replaceButtons",
@@ -35,7 +35,7 @@ const array = [
 			type: Boolean,
 			default: true,
 		},
-	},
+	}, */
 	{
 		folder: mId,
 		namespace: mId,
