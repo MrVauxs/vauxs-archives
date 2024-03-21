@@ -18,6 +18,8 @@
 			data,
 		);
 
+		console.log(data);
+
 		if (validated) {
 			archives.update((value) => {
 				value.set(data.id, data);

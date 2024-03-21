@@ -17,6 +17,8 @@
 	const loadLastArchive = game.modules.get(mId).api.loadLastArchiveStore;
 
 	function dataObj(input = {}) {
+		Object.keys(input).forEach((key) => input[key] === undefined && delete input[key]); // Remove undefined keys
+
 		const id = foundry.utils.randomID();
 		const data = foundry.utils.mergeObject(
 			{
@@ -78,7 +80,10 @@
 								data: dataObj({
 									timestamp: new Date(response.lastModified).getTime(),
 									title: response.json?.name,
-									description: response.json?.description,
+									description:
+										response.json?.description ?? Array.isArray(response.json)
+											? "From DF Chat Enhancements"
+											: "",
 									id: response.json?.id,
 									...response.json?.data,
 									location,
