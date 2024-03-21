@@ -24,6 +24,7 @@
     "create": "Create an Archive",
     "add": "Add an existing Archive",
     "remove": "Remove selected Archive",
+    "open": "Open Archive",
     "modal": {
       "create": {
         "title": "Create an Archive",

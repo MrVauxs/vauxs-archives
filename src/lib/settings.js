@@ -70,6 +70,9 @@ export function registerSettings() {
 	archives.set(new Map(game.settings.get("vauxs-archives", "archives")));
 
 	game.modules.get(mId).api = {
+		get loadLastArchiveStore() {
+			return settings.getStore("loadLastArchive");
+		},
 		get archivesMap() {
 			return get(archives);
 		},

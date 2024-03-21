@@ -1,5 +1,4 @@
 import { SvelteApplication } from "#runtime/svelte/application";
-
 import ArchiveShell from "./ArchiveShell.svelte";
 
 export default class ArchiveApplication extends SvelteApplication {

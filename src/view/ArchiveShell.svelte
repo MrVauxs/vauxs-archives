@@ -2,18 +2,19 @@
 
 <script>
 	import { ApplicationShell } from "#runtime/svelte/component/core";
-	import { settings, archives } from "$lib/settings.js";
-	import { i, validateObject, getJSON } from "$lib/utils.js";
+	import { mId, archives } from "$lib/settings.js";
+	import { i, validateObject, getJSON, dev } from "$lib/utils.js";
 	import { getContext } from "svelte";
 	import { TJSDialog } from "#runtime/svelte/application";
 	import ArchiveCreator from "./ArchiveCreator.svelte";
 	import ArchiveEditor from "./ArchiveEditor.svelte";
+	import VCEChatLog from "./ChatLog.js";
 	const { application } = getContext("#external");
 
 	export let elementRoot;
 
 	const storeTitle = application.reactive.storeAppOptions.title;
-	const loadLastArchive = settings.getStore("loadLastArchive");
+	const loadLastArchive = game.modules.get(mId).api.loadLastArchiveStore;
 
 	function dataObj(input = {}) {
 		const id = foundry.utils.randomID();
@@ -119,6 +120,14 @@
 		}
 	}
 
+	async function popOut(messages) {
+		if (typeof messages === "string") {
+			const { json } = await getJSON(messages);
+			messages = json.messages || json;
+		}
+		new VCEChatLog({}, messages).renderPopout();
+	}
+
 	let selectedArchive = $loadLastArchive ? $archives.values().next().value : null;
 
 	$: if (selectedArchive) storeTitle.set(i("title") + " - " + selectedArchive.title);
@@ -126,7 +135,7 @@
 
 <ApplicationShell bind:elementRoot>
 	<main class="max-h-full h-full flex flex-row gap-0.5">
-		<div class="w-[350px] foundry-border flex flex-col" class:muted={$archives.size === 0}>
+		<div class="w-1/2 foundry-border flex flex-col" class:muted={$archives.size === 0}>
 			<!-- Archive List -->
 			<div class="h-full p-1 gap-1 flex flex-col overflow-y-scroll overflow-x-hidden">
 				{#if $archives.size === 0}
@@ -164,22 +173,42 @@
 				</div>
 			{/if}
 		</div>
-		<div class="w-full">
+		<div class="w-1/2">
 			{#if selectedArchive}
-				{console.log(selectedArchive) || ""}
+				<!-- Inline debug hack without using {@debug}, basically -->
+				{(dev ? console.log(selectedArchive) : "") || ""}
 				{#await getJSON(selectedArchive.location)}
 					<div class="h-full align-center flex items-center justify-center">
 						<i class="fa fa-spinner fa-spin" />
 					</div>
 				{:then response}
-					<div class="h-full overflow-y-scroll flex flex-col gap-2">
-						{#each response.json.messages || response.json as message}
+					<div class="h-full flex flex-col gap-2">
+						<div class="flex flex-col gap-2 text-center">
+							<div class="text-lg">"{selectedArchive.title}"</div>
 							<div
-								class="border border-solid border-slate-500 bg-slate-300/50 w-full min-h-16 p-2 rounded-md"
+								class="italic border border-solid border-slate-500 bg-slate-300/50 min-h-8 p-4 rounded-md relative"
 							>
-								{@html message.content}
+								<div class="absolute left-0.5 top-0.5 text-xs opacity-25">Description</div>
+								{selectedArchive.description}
 							</div>
+						</div>
+						<button on:click={() => popOut(response.json.messages || response.json)}>{i("open")}</button>
+
+						<div disabled class="w-[80%] mx-auto p-2 rounded-md bg-slate-500 text-white text-center">
+							TODO: Add more buttons, summaries, etc.!
+						</div>
+						<!--
+							Replaced in favor of having a dedicated popout button
+						{#each response.json.messages || response.json as message}
+							{(dev ? (window.vcemessages = response.json.messages) : "") && ""}
+							<!-- svelte-ignore missing-declaration --\>
+							{#await new ChatMessage(message).getHTML() then htmlArray}
+								{#each htmlArray as htmlMessage}
+									{@html htmlMessage.outerHTML}
+								{/each}
+							{/await}
 						{/each}
+					-->
 					</div>
 				{:catch error}
 					<pre>{error}</pre>
