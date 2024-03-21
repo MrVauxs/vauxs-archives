@@ -12,3 +12,7 @@ Why did I make the module much smaller in scope? For sake of finishing it and pr
   - [ ] Render 1:1 - The archive is an accurate recreation of how the chatlog was rendered at the time.
   - [x] Foundry to Discord integration - ~~Allow the messages to not be deleted on Discord when archiving them.~~ If your message count is higher than 10, FtD won't delete the messages anyway.
   - [x] DFCE integration - Be able to read DFCE archives. Likely to be achieved by manually pointing at the JSON file.
+
+## Maybe:
+- [ ] 'Cron' Archive - Archive (and opt. prune) the chat automatically once the oldest message passes the threshold of ex. a week.
+- [ ] Rolls Summary - See the rolls of a given archive summarized, per user.
