@@ -59,6 +59,7 @@ jobs:
     upload:
         needs: build
         runs-on: ubuntu-latest
+        if: "!github.event.release.prerelease"
         steps:
             - name: Check for login info
               env:
