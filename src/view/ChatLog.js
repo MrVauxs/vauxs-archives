@@ -16,11 +16,13 @@ export default class VArchChatLog extends ChatLog {
 		});
 	}
 
+	// TODO: REPLACE IN V12 WITH { contents : this.messages } OR EQUIVALENT
 	get collection() {
 		return this.messages;
 	}
 
 	// https://github.com/foundryvtt/foundryvtt/issues/10587
+	// TODO: CHECK BACK IN V12
 	createPopout() {
 		if (this._popout) return this._popout;
 		const pop = new this.constructor({ popOut: true }, this.messages);
@@ -30,6 +32,7 @@ export default class VArchChatLog extends ChatLog {
 	}
 
 	// https://github.com/foundryvtt/foundryvtt/issues/10588
+	// TODO: REMOVE IN V12
 	async _renderBatch(html, size) {
 		const messages = this.collection;
 		const log = html.find("#chat-log, #chat-log-popout");
