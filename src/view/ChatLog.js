@@ -1,14 +1,18 @@
 /* eslint-disable prefer-const, no-shadow */
-export default class VCEChatLog extends ChatLog {
-	constructor(options, messages) {
+export default class VArchChatLog extends ChatLog {
+	constructor(options, input) {
 		super(options);
-		if (messages === undefined || !messages.length) throw Error("VCEChatLog requires a collection of messages");
-		this.messages = messages.map((m) => new ChatMessage(m));
+		if (input === undefined || !input.length) {
+			ui.notifications.error("Vauxs Archives ChatLog encountered an error. See console log for details.");
+			throw Error("VArchChatLog requires a collection of messages");
+		}
+		this.messages = input.map((m) => new ChatMessage(m));
 	}
 
 	static get defaultOptions() {
 		return foundry.utils.mergeObject(super.defaultOptions, {
 			classes: ["vce-chat-archive-log"],
+			resizable: true,
 		});
 	}
 
@@ -55,5 +59,15 @@ export default class VCEChatLog extends ChatLog {
 			this._lastId = messages[targetIdx].id;
 		}
 	}
+}
+
+/**
+ * Hooks into the whenever VArchChatLog is rendered.
+ */
+export function VArchChatLogHook() {
+	Hooks.on("renderVArchChatLog", (app, html) => {
+		$(html).find("#chat-form").remove();
+		$(html).find("#chat-controls").remove();
+	});
 }
 

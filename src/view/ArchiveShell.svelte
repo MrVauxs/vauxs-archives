@@ -8,7 +8,7 @@
 	import { TJSDialog } from "#runtime/svelte/application";
 	import ArchiveCreator from "./ArchiveCreator.svelte";
 	import ArchiveEditor from "./ArchiveEditor.svelte";
-	import VCEChatLog from "./ChatLog.js";
+	import VArchChatLog from "./ChatLog.js";
 	const { application } = getContext("#external");
 
 	export let elementRoot;
@@ -130,7 +130,7 @@
 			const { json } = await getJSON(messages);
 			messages = json.messages || json;
 		}
-		new VCEChatLog({}, messages).renderPopout();
+		new VArchChatLog({}, messages).renderPopout();
 	}
 
 	let selectedArchive = $loadLastArchive ? $archives.values().next().value : null;
