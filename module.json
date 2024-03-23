@@ -33,6 +33,15 @@
       ]
     }
   },
+  "relationships": {
+		"conflicts": [
+			{
+				"id": "df-chat-enhance",
+				"type": "module",
+				"reason": "DF Chat Enhancements is an outdated module, replaced by other modules including Vauxs' Archives, and breaks Vauxs' Archives chatlog browsing."
+			}
+		]
+  },
   "languages": [
     {
       "lang": "en",
