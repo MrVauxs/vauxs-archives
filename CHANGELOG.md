@@ -24,4 +24,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- In an event something modifies the filepath after creating an archive, the module will use the new filepath.
+- In an event something modifies the filepath after creating an archive, the module will use the new filepath

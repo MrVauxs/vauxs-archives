@@ -26,6 +26,7 @@ jobs:
                   version: ${{steps.get-version.outputs.version-without-v}}
                   url: https://github.com/${{github.repository}}
                   manifest: https://github.com/${{github.repository}}/releases/latest/download/module.json
+                  changelog: https://github.com/${{github.repository}}/releases/tag/${{github.event.release.tag_name}}
                   download: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/module.zip
 
             # Install packages.
@@ -84,6 +85,5 @@ jobs:
                   FVTT_MANIFEST_PATH: "module.json"
                   FVTT_USERNAME: ${{ secrets.FOUNDRY_ADMIN_USERNAME }}
                   FVTT_PASSWORD: ${{ secrets.FOUNDRY_ADMIN_PASSWORD }}
-                  FVTT_MANIFEST_URL: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/module.json
               if: ${{ env.FVTT_USERNAME }}
 
