@@ -1,5 +1,8 @@
+import { writable } from "svelte/store";
+import Searchbar from "./Searchbar.svelte";
+
 /* eslint-disable prefer-const, no-shadow */
-export default class VArchChatLog extends ChatLog {
+export default class VArchChatLog extends game.messages.directory.constructor {
 	constructor(options, input) {
 		super(options);
 		if (input === undefined || !input.length) {
@@ -7,6 +10,16 @@ export default class VArchChatLog extends ChatLog {
 			throw Error("VArchChatLog requires a collection of messages");
 		}
 		this.messages = input.map((m) => new ChatMessage(m));
+
+		this.messagesStore = writable(this.messages);
+
+		this.messagesStore.subscribe((value) => {
+			if (!$(this.element).hasClass("vce-chat-archive-log")) return; // Don't update the wrong chatlog
+			this.messages = value;
+			this._lastId = null;
+			$(this.element).find("#chat-log").empty();
+			this._renderBatch(this.element);
+		});
 	}
 
 	static get defaultOptions() {
@@ -33,7 +46,7 @@ export default class VArchChatLog extends ChatLog {
 
 	// https://github.com/foundryvtt/foundryvtt/issues/10588
 	// TODO: REMOVE IN V12
-	async _renderBatch(html, size) {
+	async _renderBatch(html, size = CONFIG.ChatMessage.batchSize) {
 		const messages = this.collection;
 		const log = html.find("#chat-log, #chat-log-popout");
 		// Get the index of the last rendered message
@@ -69,8 +82,15 @@ export default class VArchChatLog extends ChatLog {
  */
 export function VArchChatLogHook() {
 	Hooks.on("renderVArchChatLog", (app, html) => {
+		if (!$(html).hasClass("vce-chat-archive-log")) return;
 		$(html).find("#chat-form").remove();
 		$(html).find("#chat-controls").remove();
+
+		// Add Searchbar.svelte
+		app._svelte = new Searchbar({
+			target: html[0],
+			props: { app },
+		});
 	});
 }
 

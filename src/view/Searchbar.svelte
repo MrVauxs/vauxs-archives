@@ -1,15 +1,22 @@
 <script>
 	export let app;
 	let messages = app.messagesStore;
-	let originalMessages = app.originalMessages;
+	let originalMessages = app._original.messages;
 
 	let string = "";
 	let caseSensitive = false;
+	let includeAlias = true;
 
 	$: messages.update(() => {
 		return originalMessages.filter((message) => {
-			const messagecontents = caseSensitive ? message.content : message.content.toLowerCase();
-			return messagecontents.includes(caseSensitive ? string : string.toLowerCase());
+			// Check for contents
+			const messageContents = caseSensitive ? message.content : message.content.toLowerCase();
+			const findMessageByContent = messageContents.includes(caseSensitive ? string : string.toLowerCase());
+			// Check for names
+			const messageAlias = message.alias.toLowerCase();
+			const findMessageByAlias = includeAlias ? messageAlias.includes(string.toLowerCase()) : false;
+
+			return findMessageByContent || findMessageByAlias;
 		});
 	});
 </script>
@@ -26,8 +33,14 @@
 			>
 				<i class="fa-solid fa-font-case m-0" />
 			</button>
-			<button disabled data-tooltip="To Be Added; Request any additions here!" data-tooltip-direction="UP">
-				<i class="fa-solid fa-transporter-empty m-0"></i>
+			<button
+				class="shadow-black"
+				class:shadow-inner={includeAlias}
+				on:click={() => (includeAlias = !includeAlias)}
+				data-tooltip="Search Usernames"
+				data-tooltip-direction="UP"
+			>
+				<i class="fa-solid fa-user m-0" />
 			</button>
 			<button disabled data-tooltip="To Be Added; Request any additions here!" data-tooltip-direction="UP">
 				<i class="fa-solid fa-transporter-empty m-0"></i>
