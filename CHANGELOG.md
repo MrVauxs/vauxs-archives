@@ -16,6 +16,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [0.5.1] - 2024-03-24
+
+### Fixed
+
+- The module using default Foundry `ChatMessage` and `ChatLog` classes instead of those defined by the system, leading to inaccurate or non-functional messages being rendered
+- Being unable to uncheck "Delete Messages" option after checking it true
+
 ## [0.5.0] - 2024-03-24
 
 ### Added

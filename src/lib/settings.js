@@ -79,6 +79,7 @@ export function registerSettings() {
 		get archivesSetting() {
 			return game.settings.get("vauxs-archives", "archives");
 		},
+		VArchChatLogClass: null,
 	};
 
 	archives.subscribe((value) => {

@@ -8,7 +8,7 @@
 	import { TJSDialog } from "#runtime/svelte/application";
 	import ArchiveCreator from "./ArchiveCreator.svelte";
 	import ArchiveEditor from "./ArchiveEditor.svelte";
-	import { VArchChatLog } from "./ChatLog.js";
+	const VArchChatLogClass = game.modules.get("vauxs-archives").api.VArchChatLogClass;
 	const { application } = getContext("#external");
 
 	export let elementRoot;
@@ -130,7 +130,7 @@
 			const { json } = await getJSON(messages);
 			messages = json.messages || json;
 		}
-		new VArchChatLog({}, messages).renderPopout();
+		new VArchChatLogClass({}, messages).renderPopout();
 	}
 
 	let selectedArchive = $loadLastArchive ? $archives.values().next().value : null;

@@ -35,7 +35,7 @@
 		const response = await FilePicker.upload("data", folderPath, file);
 
 		if (response && response.status === "success" && deleteMessages) {
-			ChatMessage.deleteDocuments(
+			game.messages.documentClass.deleteDocuments(
 				messages.map((message) => message.id),
 				{ deleteAll: archiveAll },
 			);
@@ -114,7 +114,7 @@
 					data-tooltip-direction="UP"
 				/>
 			{/if}
-			<input type="checkbox" name="deleteMessages" bind:value={deleteMessages} />
+			<input type="checkbox" name="deleteMessages" bind:checked={deleteMessages} />
 		</div>
 		<!--
 				Due to how Discord APIs work, mass-deleting messages is not a thing anyway.
@@ -128,7 +128,8 @@
 	<div>
 		<!-- svelte-ignore missing-declaration -->
 		<button on:click={resolve} disabled={!messages.length}>
-			Archive {messages.length} / {game.messages.size} Messages
+			Archive {deleteMessages ? "and delete" : ""}
+			{messages.length} / {game.messages.size} Messages
 		</button>
 	</div>
 </div>
