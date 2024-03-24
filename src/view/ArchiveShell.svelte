@@ -196,6 +196,9 @@
 								<div class="absolute left-0.5 top-0.5 text-xs opacity-25">Description</div>
 								{selectedArchive.description}
 							</div>
+							<div class="varch-code p-0.5">
+								{selectedArchive.location}
+							</div>
 						</div>
 						<button on:click={() => popOut(response.json.messages || response.json)}>{i("open")}</button>
 

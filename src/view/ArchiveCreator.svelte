@@ -7,9 +7,9 @@
 	const { application } = getContext("#external");
 
 	async function resolve() {
-		const success = await archiveMessages(data);
-		if (success) {
-			promise.resolve(data);
+		const { status, path } = await archiveMessages(data);
+		if (status === "success") {
+			promise.resolve({ ...data, location: path });
 			application.close();
 		} else {
 			ui.notifications.error("Failed to archive messages. See console log for details.");
@@ -32,12 +32,16 @@
 			}
 		});
 
-		FilePicker.upload("data", folderPath, file).then((res) => {
-			if (res && res.status === "success" && deleteMessages)
-				ChatMessage.deleteDocuments(messages.map((message) => message.id));
-		});
+		const response = await FilePicker.upload("data", folderPath, file);
 
-		return true;
+		if (response && response.status === "success" && deleteMessages) {
+			ChatMessage.deleteDocuments(
+				messages.map((message) => message.id),
+				{ deleteAll: archiveAll },
+			);
+		}
+
+		return response;
 	}
 
 	let deleteMessages = false;
