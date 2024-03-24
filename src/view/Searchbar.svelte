@@ -7,18 +7,20 @@
 	let caseSensitive = false;
 	let includeAlias = true;
 
-	$: messages.update(() => {
-		return originalMessages.filter((message) => {
-			// Check for contents
-			const messageContents = caseSensitive ? message.content : message.content.toLowerCase();
-			const findMessageByContent = messageContents.includes(caseSensitive ? string : string.toLowerCase());
-			// Check for names
-			const messageAlias = message.alias.toLowerCase();
-			const findMessageByAlias = includeAlias ? messageAlias.includes(string.toLowerCase()) : false;
+	let newMessages = originalMessages;
 
-			return findMessageByContent || findMessageByAlias;
-		});
+	$: newMessages = originalMessages.filter((message) => {
+		// Check for contents
+		const messageContents = caseSensitive ? message.content : message.content.toLowerCase();
+		const findMessageByContent = messageContents.includes(caseSensitive ? string : string.toLowerCase());
+		// Check for names
+		const messageAlias = message.alias.toLowerCase();
+		const findMessageByAlias = includeAlias ? messageAlias.includes(string.toLowerCase()) : false;
+
+		return findMessageByContent || findMessageByAlias;
 	});
+
+	$: if (newMessages.length !== $messages.length) messages.set(newMessages);
 </script>
 
 <div id="vauxs-archive">

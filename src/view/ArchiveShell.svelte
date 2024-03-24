@@ -8,7 +8,7 @@
 	import { TJSDialog } from "#runtime/svelte/application";
 	import ArchiveCreator from "./ArchiveCreator.svelte";
 	import ArchiveEditor from "./ArchiveEditor.svelte";
-	import VArchChatLog from "./ChatLog.js";
+	import { VArchChatLog } from "./ChatLog.js";
 	const { application } = getContext("#external");
 
 	export let elementRoot;
