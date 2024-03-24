@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
 ### Changed
 
 ### Deprecated
@@ -20,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changelogs
 - Searchbar in the ChatLog
-- Filepath of seleceted archive in Archives Menu
+- Filepath of selected archive in Archives Menu
 
 ### Changed
 
