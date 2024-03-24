@@ -35,15 +35,18 @@ jobs:
             # Build distribution.
             - run: npm run build
 
-            # Create a zip file with all files required by the module to add to the release.
-            - run: zip -r ./module.zip module.json index.js index.js.map style.css assets/ dist/ lang/ packs/ LICENSE AUTHORS CHANGELOG.md
-
             - name: Get changelog release info
               id: changelog
               uses: release-flow/keep-a-changelog-action@v3
               with:
                   command: query
                   version: ${{ steps.get-version.outputs.version-without-v }}
+
+            - name: Update the Changelog.md file with only the latest version.
+              run: echo "${{ steps.changelog.outputs.release-notes }}" > CHANGELOG.md
+
+            # Create a zip file with all files required by the module to add to the release.
+            - run: zip -r ./module.zip module.json index.js index.js.map style.css assets/ dist/ lang/ packs/ LICENSE AUTHORS CHANGELOG.md
 
             # Create a release for this specific version.
             - name: Update Release with Files

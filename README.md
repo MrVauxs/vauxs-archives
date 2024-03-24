@@ -9,7 +9,7 @@ Previously Vauxs Chat Enhancements, this module is just the archives feature.
 
 Why did I make the module much smaller in scope? For sake of finishing it and preserving my sanity.
 
-## TODO
+## TODO for 1.0.0
 
 - [x] Chat Archives - Create archives of the chat log and browse them in-game.
   - [x] Quick Search - Be able to search the archives for specific messages.
