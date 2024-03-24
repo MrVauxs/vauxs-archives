@@ -13,7 +13,7 @@ jobs:
 
             # get part of the tag after the `v`
             - name: Extract tag version number
-              id: get_version
+              id: get-version
               run: echo "version-without-v=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
 
             # Substitute the Manifest and Download URLs in the `module.json`.
@@ -23,7 +23,7 @@ jobs:
               with:
                   files: "module.json"
               env:
-                  version: ${{steps.get_version.outputs.version-without-v}}
+                  version: ${{steps.get-version.outputs.version-without-v}}
                   url: https://github.com/${{github.repository}}
                   manifest: https://github.com/${{github.repository}}/releases/latest/download/module.json
                   download: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/module.zip
@@ -35,7 +35,14 @@ jobs:
             - run: npm run build
 
             # Create a zip file with all files required by the module to add to the release.
-            - run: zip -r ./module.zip module.json index.js index.js.map style.css assets/ dist/ lang/ packs/ LICENSE AUTHORS
+            - run: zip -r ./module.zip module.json index.js index.js.map style.css assets/ dist/ lang/ packs/ LICENSE AUTHORS CHANGELOG.md
+
+            - name: Get changelog release info
+              id: changelog
+              uses: release-flow/keep-a-changelog-action@v3
+              with:
+                  command: query
+                  version: ${{ steps.get-version.outputs.version-without-v }}
 
             # Create a release for this specific version.
             - name: Update Release with Files
@@ -43,13 +50,10 @@ jobs:
               uses: ncipollo/release-action@v1.14.0
               with:
                   allowUpdates: true # Set this to false if you want to prevent updating existing releases.
-                  name: ${{ github.event.release.name }}
-                  draft: false
-                  prerelease: false
+                  name: ${{ steps.changelog.outputs.version }}
+                  body: ${{ steps.changelog.outputs.release-notes }}
                   token: ${{ secrets.GITHUB_TOKEN }}
                   artifacts: "./module.json, ./module.zip"
-                  tag: ${{ github.event.release.tag_name }}
-                  body: ${{ github.event.release.body }}
 
             # Upload workflow
             - uses: actions/upload-artifact@v4
@@ -59,7 +63,7 @@ jobs:
     upload:
         needs: build
         runs-on: ubuntu-latest
-        if: "!github.event.release.prerelease"
+        if: !github.event.release.prerelease
         steps:
             - name: Check for login info
               env:
