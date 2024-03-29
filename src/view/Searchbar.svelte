@@ -23,7 +23,7 @@
 	$: if (newMessages.length !== $messages.length) messages.set(newMessages);
 </script>
 
-<div id="vauxs-archive">
+<div class="vauxs-archive">
 	<div class="mx-1 mb-0.5">
 		<div class="flex flex-row gap-0.5 text-xs mr-0.5 mb-0.5">
 			<button
@@ -56,7 +56,7 @@
 </div>
 
 <style lang="postcss">
-	#vauxs-archive {
+	.vauxs-archive {
 		flex: 0;
 
 		& input {

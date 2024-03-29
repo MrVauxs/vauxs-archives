@@ -30,7 +30,7 @@
 	}
 </script>
 
-<div id="vauxs-archive">
+<div class="vauxs-archive">
 	<div
 		class="grid grid-cols-2 gap-1 text-center mb-1 [&_label]:leading-6 [&>label]:col-span-2 [&>input]:col-span-3 [&_input]:h-6 [&_input]:mt-0"
 	>

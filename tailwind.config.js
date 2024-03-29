@@ -7,7 +7,7 @@ export default {
 	corePlugins: {
 		preflight: false,
 	},
-	important: "#vauxs-archive",
+	important: ".vauxs-archive",
 	plugins: [],
 };
 
