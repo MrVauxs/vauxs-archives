@@ -25,6 +25,9 @@ Why did I make the module much smaller in scope? For sake of finishing it and pr
 - [ ] 'Cron' Archive - Archive (and opt. prune) the chat automatically once the oldest message passes the threshold of ex. a week.
 - [ ] Rolls Summary - See the rolls of a given archive summarized, per user.
 
-## Preview (0.5.0)
+## Preview (0.6.0)
 
 ![image](https://github.com/MrVauxs/vauxs-archives/assets/32039708/69514f46-f7cb-4898-b1b4-b2003eadcc87)
+
+![chrome_ACbnVeqohy](https://github.com/MrVauxs/vauxs-archives/assets/32039708/8c738df4-91c0-47fe-a9bd-70a1f96cb5bd)
+
