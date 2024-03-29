@@ -20,14 +20,14 @@ export function registerReplaceButtons() {
 			button.attr("data-tooltip-position", "top");
 			button.find("i").removeClass("fa-save").addClass("fa-archive");
 			// Open the archive creation dialog
-			button.on("click", () => createArchive());
-			button.on("contextmenu", () => openArchive());
+			button.bind("click", () => createArchive());
+			button.bind("contextmenu", () => openArchive());
 		});
 	}
 
 	if (get(removeButton)) {
 		Hooks.on("renderChatLog", (app, html) => {
-			$(html).find(".delete.chat-flush").remove();
+			$(html).find(".delete.chat-flush")?.remove?.();
 
 			$(html).find(".control-buttons").addClass("no-flush-button");
 		});
