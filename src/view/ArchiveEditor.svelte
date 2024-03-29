@@ -32,16 +32,22 @@
 
 <div id="vauxs-archive">
 	<div
-		class="grid grid-cols-5 gap-1 text-center mb-1 [&_label]:leading-6 [&>label]:col-span-2 [&>input]:col-span-3 [&_input]:h-6 [&_input]:mt-0"
+		class="grid grid-cols-2 gap-1 text-center mb-1 [&_label]:leading-6 [&>label]:col-span-2 [&>input]:col-span-3 [&_input]:h-6 [&_input]:mt-0"
 	>
-		<label for="title">Title</label>
-		<input type="text" name="title" bind:value={data.title} />
+		<label class="contents">
+			Title
+			<input type="text" bind:value={data.title} />
+		</label>
 
-		<label for="description">Description</label>
-		<input type="text" name="description" bind:value={data.description} placeholder="Archive Description" />
+		<label class="contents">
+			Description
+			<input type="text" bind:value={data.description} placeholder="Archive Description" />
+		</label>
 
-		<label for="location">File Location</label>
-		<input disabled type="text" name="location" bind:value={data.location} />
+		<label class="contents">
+			File Location
+			<input disabled type="text" bind:value={data.location} />
+		</label>
 	</div>
 	<div>
 		<!-- svelte-ignore missing-declaration -->

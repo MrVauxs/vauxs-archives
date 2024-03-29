@@ -61,24 +61,30 @@
 
 <div id="vauxs-archive">
 	<div
-		class="grid grid-cols-5 gap-1 text-center mb-1 [&_label]:leading-6 [&>label]:col-span-2 [&>input]:col-span-3 [&_input]:h-6 [&_input]:mt-0"
+		class="grid grid-cols-2 gap-1 text-center mb-1 [&_label]:leading-6 [&>label]:col-span-2 [&>input]:col-span-3 [&_input]:h-6 [&_input]:mt-0"
 	>
-		<label for="title">Title</label>
-		<input type="text" name="title" bind:value={data.title} />
+		<label class="contents">
+			Title
+			<input type="text" bind:value={data.title} />
+		</label>
 
-		<label for="description">Description</label>
-		<input type="text" name="description" bind:value={data.description} placeholder="Archive Description" />
+		<label class="contents">
+			Description
+			<input type="text" bind:value={data.description} placeholder="Archive Description" />
+		</label>
 
-		<label for="location">File Location</label>
-		<input disabled type="text" name="location" bind:value={data.location} />
+		<label class="contents">
+			File location
+			<input disabled type="text" bind:value={data.location} />
+		</label>
 
-		<div class="col-span-5 text-center">
-			<label class="align-top" for="all">Archive all messages</label>
-			<input type="checkbox" name="all" bind:checked={archiveAll} />
-		</div>
+		<label class="contents">
+			Archive all Messages
+			<input type="checkbox" class="mx-auto" bind:checked={archiveAll} />
+		</label>
 
 		{#if !archiveAll}
-			<div class="col-span-5 flex-1 row-span-2 grid grid-cols-2 gap-2">
+			<div class="col-span-2 flex-1 row-span-2 grid grid-cols-2 gap-2">
 				<span class="relative">
 					<label for="date-from">From</label>
 					<!-- svelte-ignore missing-declaration -->
@@ -104,18 +110,20 @@
 			</div>
 		{/if}
 
-		<div class="col-span-5 text-center">
-			<label class="align-top" for="deleteMessages">Delete Messages</label>
-			<!-- svelte-ignore missing-declaration -->
-			{#if game.modules.get("foundrytodiscord")?.active}
-				<i
-					class="fa fa-info-circle align-top leading-6 underline-offset-2 underline"
-					data-tooltip="You have <u>Foundry to Discord</u> enabled. Please note that the module ignores mass deletions (10+ messages), meaning that your Discord copies will not be removed."
-					data-tooltip-direction="UP"
-				/>
-			{/if}
-			<input type="checkbox" name="deleteMessages" bind:checked={deleteMessages} />
-		</div>
+		<label class="contents" for="deleteMessages">
+			<span>
+				Delete Messages
+				<!-- svelte-ignore missing-declaration -->
+				{#if game.modules.get("foundrytodiscord")?.active}
+					<i
+						class="fa fa-info-circle align-top leading-6 underline-offset-2 underline ml-0.5"
+						data-tooltip="You have <u>Foundry to Discord</u> enabled. Please note that the module ignores mass deletions (10+ messages), meaning that your Discord copies will not be removed."
+						data-tooltip-direction="UP"
+					/>
+				{/if}
+			</span>
+			<input type="checkbox" class="mx-auto" bind:checked={deleteMessages} />
+		</label>
 		<!--
 				Due to how Discord APIs work, mass-deleting messages is not a thing anyway.
 				https://github.com/therealguy90/foundrytodiscord/issues/30

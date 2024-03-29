@@ -37,7 +37,7 @@ let archiveMenu;
  *
  * @returns {ArchiveApplication} The archive menu instance.
  */
-function openArchive() {
+export function openArchive() {
 	archiveMenu = archiveMenu ? archiveMenu : new ArchiveApplication();
 	archiveMenu.render(true, { focus: true });
 

@@ -23,7 +23,7 @@ const array = [
 			default: false,
 		},
 	},
-	/* {
+	{
 		folder: mId,
 		namespace: mId,
 		key: "replaceButtons",
@@ -34,8 +34,23 @@ const array = [
 			config: true,
 			type: Boolean,
 			default: true,
+			requiresReload: true,
 		},
-	}, */
+	},
+	{
+		folder: mId,
+		namespace: mId,
+		key: "removeButton",
+		options: {
+			name: "vauxs-archives.settings.removeButton.title",
+			hint: "vauxs-archives.settings.removeButton.hint",
+			scope: "world",
+			config: true,
+			type: Boolean,
+			default: false,
+			requiresReload: true,
+		},
+	},
 	{
 		folder: mId,
 		namespace: mId,
@@ -82,9 +97,11 @@ export function registerSettings() {
 		VArchChatLogClass: null,
 	};
 
-	archives.subscribe((value) => {
-		console.log("Updating archives", value);
-		game.settings.set("vauxs-archives", "archives", Array.from(value));
+	Hooks.on("ready", () => {
+		archives.subscribe((value) => {
+			console.log("Updating archives", value);
+			game.settings.set("vauxs-archives", "archives", Array.from(value));
+		});
 	});
 }
 

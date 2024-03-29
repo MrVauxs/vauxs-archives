@@ -12,8 +12,12 @@
         "button": "Open"
       },
       "replaceButtons": {
-        "title": "Replace the Export Chat Log button",
-        "hint": "Replaces the \"Export Chat Log\" button in chat with \"Open Chat Archives\"."
+        "title": "Replace the Export Chat Log Button",
+        "hint": "Replaces the \"Export Chat Log\" button in chat with \"Create Archive\". Right clicking the button opens the Chat Archives."
+      },
+      "removeButton": {
+        "title": "Remove the Clear Chat Log Button",
+        "hint": "Removes the \"Clear Chat Log\" button in chat."
       }
     },
     "support": "Donate",

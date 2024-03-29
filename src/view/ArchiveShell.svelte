@@ -1,5 +1,37 @@
 <svelte:options accessors={true} />
 
+<script context="module">
+	export async function createArchive(event, input) {
+		const data = dataObj(input);
+
+		if (!game.messages.size) return ui.notifications.error("No messages found!");
+
+		const result = await TJSDialog.wait({
+			// modal: true,
+			title: i("modal.create.title"),
+			zIndex: 1000,
+			content: { class: ArchiveCreator, props: { data, event } },
+		});
+
+		const validated = validateObject(
+			{
+				id: "string",
+				title: "string",
+				timestamp: "number",
+				description: "string",
+				location: "string",
+			},
+			result,
+		);
+
+		if (validated) {
+			archives.update((value) => {
+				return value.set(result.id, result);
+			});
+		}
+	}
+</script>
+
 <script>
 	import { ApplicationShell } from "#runtime/svelte/component/core";
 	import { mId, archives } from "$lib/settings.js";
@@ -31,36 +63,6 @@
 			input,
 		);
 		return data;
-	}
-
-	async function createArchive(event, input) {
-		const data = dataObj(input);
-
-		if (!game.messages.size) return ui.notifications.error("No messages found!");
-
-		const result = await TJSDialog.wait({
-			// modal: true,
-			title: i("modal.create.title"),
-			zIndex: 1000,
-			content: { class: ArchiveCreator, props: { data, event } },
-		});
-
-		const validated = validateObject(
-			{
-				id: "string",
-				title: "string",
-				timestamp: "number",
-				description: "string",
-				location: "string",
-			},
-			result,
-		);
-
-		if (validated) {
-			archives.update((value) => {
-				return value.set(result.id, result);
-			});
-		}
 	}
 
 	async function addArchive() {

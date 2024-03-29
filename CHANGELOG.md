@@ -16,6 +16,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [0.6.0] - 2024-03-29
+
+### Added
+
+- Buttons in the chat window for quick access to creating and browsing archives
+  - A setting to replace the Export Chat Log button with the Create Archive button (right clicking the button opens the Chat Archives menu)
+  - A setting to remove the Clear Chat Log button
+
 ## [0.5.1] - 2024-03-24
 
 ### Fixed
