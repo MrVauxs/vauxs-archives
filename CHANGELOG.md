@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - CSS Clashes with other modules in regards to chat button modifications ([#4](https://github.com/MrVauxs/vauxs-archives/issues/4))
+- ID Clashes with Foundry / itself in regards to rendering chat log ([#5](https://github.com/MrVauxs/vauxs-archives/issues/5))
 
 ## [1.0.2] - 2024-03-29
 
