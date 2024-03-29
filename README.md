@@ -23,6 +23,10 @@ Previously meant to be in Vauxs Chat Enhancements, this module is just the archi
 - [ ] 'Cron' Archive - Archive (and opt. prune) the chat automatically once the oldest message passes the threshold of ex. a week.
 - [ ] Rolls Summary - See the rolls of a given archive summarized, per user.
 
+## Won't Do
+- Chat Merging - You have plenty of other UI modules for that.
+- Saving to Journals - Never used it, found it clunky at best.
+
 ## Preview
 
 ![chrome_R6Y39KqQXO](https://github.com/MrVauxs/vauxs-archives/assets/32039708/016ac5f5-62fc-4a48-9a17-da1c9e55f288)
