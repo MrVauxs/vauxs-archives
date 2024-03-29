@@ -159,7 +159,7 @@
 					<button
 						class="relative min-h-16"
 						on:click={() => (selectedArchive = archive)}
-						class:active={selectedArchive === archive}
+						class:active={selectedArchive.id === archive.id}
 					>
 						<span>{archive.title}</span>
 						<span class="text-xs absolute right-1 bottom-0">
