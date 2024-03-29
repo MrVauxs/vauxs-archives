@@ -1,6 +1,6 @@
 import { settings } from "$lib/settings.js";
 import { get } from "svelte/store";
-import { createArchive } from "./view/ArchiveShell.svelte";
+import { createArchive } from "./view/createArchive.js";
 import { openArchive } from "./view/ArchiveApplication.js";
 
 /**

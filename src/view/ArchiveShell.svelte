@@ -1,45 +1,16 @@
 <svelte:options accessors={true} />
 
-<script context="module">
-	export async function createArchive(event, input) {
-		const data = dataObj(input);
-
-		if (!game.messages.size) return ui.notifications.error("No messages found!");
-
-		const result = await TJSDialog.wait({
-			// modal: true,
-			title: i("modal.create.title"),
-			zIndex: 1000,
-			content: { class: ArchiveCreator, props: { data, event } },
-		});
-
-		const validated = validateObject(
-			{
-				id: "string",
-				title: "string",
-				timestamp: "number",
-				description: "string",
-				location: "string",
-			},
-			result,
-		);
-
-		if (validated) {
-			archives.update((value) => {
-				return value.set(result.id, result);
-			});
-		}
-	}
-</script>
-
 <script>
 	import { ApplicationShell } from "#runtime/svelte/component/core";
+	import { TJSTinyMCE } from "#standard/component";
 	import { mId, archives } from "$lib/settings.js";
-	import { i, validateObject, getJSON, dev } from "$lib/utils.js";
+	import { i, getJSON, dev } from "$lib/utils.js";
 	import { getContext } from "svelte";
 	import { TJSDialog } from "#runtime/svelte/application";
-	import ArchiveCreator from "./ArchiveCreator.svelte";
 	import ArchiveEditor from "./ArchiveEditor.svelte";
+	import { dataObj, createArchive } from "./createArchive.js";
+	import { derived, writable } from "svelte/store";
+
 	const VArchChatLogClass = game.modules.get("vauxs-archives").api.VArchChatLogClass;
 	const { application } = getContext("#external");
 
@@ -47,23 +18,6 @@
 
 	const storeTitle = application.reactive.storeAppOptions.title;
 	const loadLastArchive = game.modules.get(mId).api.loadLastArchiveStore;
-
-	function dataObj(input = {}) {
-		Object.keys(input).forEach((key) => input[key] === undefined && delete input[key]); // Remove undefined keys
-
-		const id = foundry.utils.randomID();
-		const data = foundry.utils.mergeObject(
-			{
-				id,
-				title: `Archive ${id.slice(0, 4)}; ${new Date(Date.now()).toDateString()}`,
-				timestamp: Date.now(),
-				description: "",
-				location: `worlds/${game.world.id}/chat-archives/${id}.json`,
-			},
-			input,
-		);
-		return data;
-	}
 
 	async function addArchive() {
 		const fp = new FilePicker({
@@ -135,20 +89,73 @@
 		new VArchChatLogClass({}, messages).renderPopout();
 	}
 
-	let selectedArchive = $loadLastArchive ? $archives.values().next().value : null;
-
 	$: if (selectedArchive) storeTitle.set(i("title") + " - " + selectedArchive.title);
+
+	let sortType = writable(2); // 0 = default, 1 = time ascending, 2 = time descending, 3 = title ascending, 4 = title descending
+
+	function sortedDisplay() {
+		return new Map(
+			[...$archives].sort((a, b) => {
+				if ($sortType === 1) return a[1].timestamp - b[1].timestamp;
+				if ($sortType === 2) return b[1].timestamp - a[1].timestamp;
+				if ($sortType === 3) return a[1].title.localeCompare(b[1].title);
+				if ($sortType === 4) return b[1].title.localeCompare(a[1].title);
+				return 0;
+			}),
+		);
+	}
+
+	let display = derived([archives, sortType], () => sortedDisplay());
+
+	let selectedArchive = $loadLastArchive ? $display.values().next().value : null;
+
+	function updateArchives(data) {
+		if (!data.id) {
+			ui.notifications.error("Edited archive has no ID! What?? Let Vauxs know.");
+			console.error(data);
+			return;
+		}
+		archives.update((value) => {
+			value.set(data.id, data);
+			return value;
+		});
+	}
 </script>
 
 <ApplicationShell bind:elementRoot>
 	<main class="max-h-full h-full flex flex-row gap-0.5">
-		<div class="w-1/2 foundry-border flex flex-col" class:muted={$archives.size === 0}>
+		<div class="w-1/2 foundry-border flex flex-col relative" class:muted={$archives.size === 0}>
+			<button
+				class="absolute top-0.5 left-0.5 z-10 size-8 bg-slate-200"
+				on:click={() => {
+					$sortType++;
+					$sortType > 4 ? ($sortType = 0) : null;
+				}}
+				on:contextmenu={() => {
+					$sortType--;
+					$sortType < 0 ? ($sortType = 4) : null;
+				}}
+				data-tooltip={"Sort by Date/Title" +
+					($sortType === 0 ? "" : $sortType === 1 || $sortType === 2 ? " (Date)" : " (Title)")}
+			>
+				{#if $sortType === 1}
+					<i class="fas fa-arrow-down-wide-short mx-auto leading-7" />
+				{:else if $sortType === 2}
+					<i class="fas fa-arrow-up-wide-short mx-auto leading-7" />
+				{:else if $sortType === 3}
+					<i class="fas fa-arrow-down-a-z mx-auto leading-7" />
+				{:else if $sortType === 4}
+					<i class="fas fa-arrow-up-a-z mx-auto leading-7" />
+				{:else}
+					<i class="fas fa-sort mx-auto leading-7" />
+				{/if}
+			</button>
 			<!-- Archive List -->
 			<div class="h-full p-1 gap-1 flex flex-col overflow-y-scroll overflow-x-hidden">
-				{#if $archives.size === 0}
+				{#if $display.size === 0}
 					<i class="h-full align-center flex items-center justify-center"> {i("noArchive.found")} </i>
 				{/if}
-				{#each $archives as [id, archive]}
+				{#each $display as [id, archive]}
 					<button
 						class="relative min-h-16"
 						on:click={() => (selectedArchive = archive)}
@@ -189,24 +196,30 @@
 						<i class="fa fa-spinner fa-spin" />
 					</div>
 				{:then response}
-					<div class="h-full flex flex-col gap-2">
-						<div class="flex flex-col gap-2 text-center">
-							<div class="text-lg">"{selectedArchive.title}"</div>
+					<div class="h-full flex flex-col gap-2 overflow-hidden overflow-y-auto">
+						<div class="flex flex-col gap-1 text-center">
+							<input
+								class="text-lg [&:not(:hover)]:border-none [&:not(:hover)]:bg-transparent"
+								type="text"
+								value={selectedArchive.title}
+								on:change={(event) => updateArchives({ ...selectedArchive, title: event.target.value })}
+							/>
 							<div
-								class="italic border border-solid border-slate-500 bg-slate-300/50 min-h-8 p-4 rounded-md relative"
+								class="italic border border-solid border-slate-500 bg-slate-300/50 min-h-48 max-h-80 rounded-md relative"
 							>
 								<div class="absolute left-0.5 top-0.5 text-xs opacity-25">Description</div>
-								{selectedArchive.description}
+								<TJSTinyMCE
+									content={selectedArchive.description}
+									on:editor:save={(event) =>
+										updateArchives({ ...selectedArchive, description: event.detail.content })}
+								/>
 							</div>
-							<div class="varch-code p-0.5">
+							<div class="varch-code p-0.5 text-xs">
 								{selectedArchive.location}
 							</div>
 						</div>
 						<button on:click={() => popOut(response.json.messages || response.json)}>{i("open")}</button>
 
-						<div disabled class="w-[80%] mx-auto p-2 rounded-md bg-slate-500 text-white text-center">
-							TODO: Add more buttons, summaries, etc.!
-						</div>
 						<!--
 							Replaced in favor of having a dedicated popout button
 						{#each response.json.messages || response.json as message}
