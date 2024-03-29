@@ -205,7 +205,7 @@
 								on:change={(event) => updateArchives({ ...selectedArchive, title: event.target.value })}
 							/>
 							<div
-								class="italic border border-solid border-slate-500 bg-slate-300/50 min-h-48 max-h-80 rounded-md relative pl-1"
+								class="border border-solid border-slate-500 bg-slate-300/50 min-h-48 max-h-80 rounded-md relative pl-1"
 							>
 								<div class="absolute -top-4 left-0 text-xs opacity-25">Description</div>
 								<TJSTinyMCE
