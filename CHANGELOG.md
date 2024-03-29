@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [0.6.1] - 2024-03-29
+
+### Fixed
+
+- Apparently right clicking not opening the menu
+
 ## [0.6.0] - 2024-03-29
 
 ### Added
