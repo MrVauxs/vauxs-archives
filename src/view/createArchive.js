@@ -48,6 +48,8 @@ export async function createArchive(event, input) {
 		content: { class: ArchiveCreator, props: { data, event } },
 	});
 
+	if (!result) return;
+
 	const validated = validateObject(
 		{
 			id: "string",
