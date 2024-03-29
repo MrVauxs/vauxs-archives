@@ -16,6 +16,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [1.0.2] - 2024-03-29
+
+### Fixed
+
+- The selected archive becoming visually unselected after editing the archive
+- The description having italics forced upon it
+
 ## [1.0.1] - 2024-03-29
 
 ### Fixed
