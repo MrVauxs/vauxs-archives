@@ -13,7 +13,7 @@ Why did I make the module much smaller in scope? For sake of finishing it and pr
 
 - [x] Chat Archives - Create archives of the chat log and browse them in-game.
   - [x] Quick Search - Be able to search the archives for specific messages.
-  - [ ] Quick Archive - Replace the "Export Chat Log" button with a Vauxs' Archives button.
+  - [x] Quick Archive - Replace the "Export Chat Log" button with a Vauxs' Archives button.
   - [ ] Edit Archive - Edit the name, description, and date of a given archive.
   - [ ] Sort Archives - Sort archives Alphabetically or Date of creation.
   - [x] Render 1:1 - The archive is an accurate recreation of how the chatlog was rendered at the time.
@@ -25,6 +25,9 @@ Why did I make the module much smaller in scope? For sake of finishing it and pr
 - [ ] 'Cron' Archive - Archive (and opt. prune) the chat automatically once the oldest message passes the threshold of ex. a week.
 - [ ] Rolls Summary - See the rolls of a given archive summarized, per user.
 
-## Preview (0.5.0)
+## Preview (0.6.0)
 
 ![image](https://github.com/MrVauxs/vauxs-archives/assets/32039708/69514f46-f7cb-4898-b1b4-b2003eadcc87)
+
+![chrome_ACbnVeqohy](https://github.com/MrVauxs/vauxs-archives/assets/32039708/8c738df4-91c0-47fe-a9bd-70a1f96cb5bd)
+
