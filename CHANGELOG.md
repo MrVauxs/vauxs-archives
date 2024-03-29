@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [1.0.1] - 2024-03-29
+
+### Fixed
+
+- The styling of the "Description" to not intersect with the actual text
+
 ## [1.0.0] - 2024-03-29
 
 ### Added

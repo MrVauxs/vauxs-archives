@@ -196,27 +196,27 @@
 						<i class="fa fa-spinner fa-spin" />
 					</div>
 				{:then response}
-					<div class="h-full flex flex-col gap-2 overflow-hidden overflow-y-auto">
-						<div class="flex flex-col gap-1 text-center">
+					<div class="h-full flex flex-col gap-1 overflow-hidden overflow-y-auto">
+						<div class="flex flex-col gap-4">
 							<input
-								class="text-lg [&:not(:hover)]:border-none [&:not(:hover)]:bg-transparent"
+								class="text-lg [&:not(:hover)]:border-none [&:not(:hover)]:bg-transparent text-center"
 								type="text"
 								value={selectedArchive.title}
 								on:change={(event) => updateArchives({ ...selectedArchive, title: event.target.value })}
 							/>
 							<div
-								class="italic border border-solid border-slate-500 bg-slate-300/50 min-h-48 max-h-80 rounded-md relative"
+								class="italic border border-solid border-slate-500 bg-slate-300/50 min-h-48 max-h-80 rounded-md relative pl-1"
 							>
-								<div class="absolute left-0.5 top-0.5 text-xs opacity-25">Description</div>
+								<div class="absolute -top-4 left-0 text-xs opacity-25">Description</div>
 								<TJSTinyMCE
 									content={selectedArchive.description}
 									on:editor:save={(event) =>
 										updateArchives({ ...selectedArchive, description: event.detail.content })}
 								/>
 							</div>
-							<div class="varch-code p-0.5 text-xs">
-								{selectedArchive.location}
-							</div>
+						</div>
+						<div class="varch-code p-0.5 text-xs text-center">
+							{selectedArchive.location}
 						</div>
 						<button on:click={() => popOut(response.json.messages || response.json)}>{i("open")}</button>
 
