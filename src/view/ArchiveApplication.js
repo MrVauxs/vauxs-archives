@@ -8,6 +8,7 @@ export default class ArchiveApplication extends SvelteApplication {
 			id: "vauxs-archive",
 			width: 900,
 			height: 600,
+			classes: ["vauxs-archive"],
 			headerIcon: "modules/vauxs-archives/assets/Face16px.gif",
 			resizable: true,
 			svelte: {
