@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [1.0.4] - 2024-03-30
+
+### Fixed
+
+- Lack of a CSS class resulting in Archive menu stylistically collapsing ([#5](https://github.com/MrVauxs/vauxs-archives/issues/6))
+
 ## [1.0.3] - 2024-03-29
 
 ### Fixed
