@@ -14,6 +14,18 @@ export function i(string, extra) {
 }
 
 /**
+ * Annoys the user about using DFCE when they shouldn't have it enabled!!!
+ */
+export function annoy() {
+	if (game.modules.get("df-chat-enhance")?.active) {
+		ui.notifications.error(
+			"DF Chat Enhancements is outdated and not compatible with Vauxs' Archives, causing issues when browsing archives. Please disable DF Chat Enhancements.",
+			{ permanent: true }
+		);
+	}
+}
+
+/**
  * Validates an object based on required properties.
  *
  * @param {object} schema - The schema to be used for validation.

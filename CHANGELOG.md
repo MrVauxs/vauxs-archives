@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [1.0.5] - 2024-03-31
+
+### Added
+
+- An additional warning to the user about having DFCE enabled when trying to read an archive, instead of doing so only on load where its more easily dismissed.
+
 ## [1.0.4] - 2024-03-30
 
 ### Fixed

@@ -1,4 +1,4 @@
-import { dev } from "$lib/utils.js";
+import { dev, annoy } from "$lib/utils.js";
 import { writable } from "svelte/store";
 import Searchbar from "./Searchbar.svelte";
 import { mId } from "../lib/settings";
@@ -33,6 +33,8 @@ function registerChatLog() {
 
 				if (dev) console.log("ChatLog updated", this.messages);
 			});
+
+			annoy(); // Due to pop-out it actually doubles but couldn't care less.
 		}
 
 		static get defaultOptions() {
