@@ -27,6 +27,10 @@ Previously meant to be in Vauxs Chat Enhancements, this module is just the archi
 - Chat Merging - You have plenty of other UI modules for that.
 - Saving to Journals - Never used it, found it clunky at best.
 
+### Warning!
+Due to DF Chat Enhancements feature of limiting the amount of messages being rendered at once (which Foundry already does as of v10!) it breaks the rendering on chat logs on Vauxs' Archives.
+**You cannot have both of these modules enabled simultaneously.** 
+
 ## Preview
 
 ![chrome_R6Y39KqQXO](https://github.com/MrVauxs/vauxs-archives/assets/32039708/016ac5f5-62fc-4a48-9a17-da1c9e55f288)
