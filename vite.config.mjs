@@ -32,6 +32,7 @@ const s_RESOLVE_CONFIG = {
 	dedupe: ["svelte"],
 };
 
+// eslint-disable-next-line no-unused-vars
 export default defineConfig(({ command, mode }) => {
 	const env = loadEnv(mode, process.cwd(), "");
 	return {
@@ -72,13 +73,13 @@ export default defineConfig(({ command, mode }) => {
 			open: "/game",
 			proxy: {
 				// Serves static files from main Foundry server.
-				[`^(/${s_PACKAGE_ID}/(assets|lang|packs|style.css))`]: "http://localhost:" + env.GAME_PORT ?? 30001,
+				[`^(/${s_PACKAGE_ID}/(assets|lang|packs|style.css))`]: `http://localhost:${env.GAME_PORT}` ?? 30001,
 
 				// All other paths besides package ID path are served from main Foundry server.
-				[`^(?!/${s_PACKAGE_ID}/)`]: "http://localhost:" + env.GAME_PORT ?? 30001,
+				[`^(?!/${s_PACKAGE_ID}/)`]: `http://localhost:${env.GAME_PORT}` ?? 30001,
 
 				// Enable socket.io from main Foundry server.
-				"/socket.io": { target: "ws://localhost:" + env.GAME_PORT ?? 30001, ws: true },
+				"/socket.io": { target: `ws://localhost:${env.GAME_PORT}` ?? 30001, ws: true },
 			},
 		},
 
