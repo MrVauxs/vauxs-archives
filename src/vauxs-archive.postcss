@@ -2,11 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-#vauxs-archive .window-content {
-	@apply p-2;
-}
-
 #vauxs-archive.app {
+	.window-content {
+		@apply p-2;
+	}
+	.window-title {
+		padding-left: 6px;
+	}
+	--tjs-app-header-gap: 0;
+	--tjs-app-header-button-padding: 0 0 0 8px;
+	--tjs-app-header-padding: 0 8px 0 4px;
 	min-width: 600px;
 	min-height: 330px;
 
