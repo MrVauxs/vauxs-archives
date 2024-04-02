@@ -60,9 +60,7 @@
 </script>
 
 <div class="vauxs-archive">
-	<div
-		class="grid grid-cols-2 gap-1 text-center mb-1 [&_label]:leading-6 [&>label]:col-span-2 [&>input]:col-span-3 [&_input]:h-6 [&_input]:mt-0"
-	>
+	<div class="grid grid-cols-2 gap-1 text-center mb-1 [&_label]:leading-6 [&_input]:h-6 [&_input]:mt-0">
 		<label class="contents">
 			Title
 			<input type="text" bind:value={data.title} />
@@ -78,10 +76,10 @@
 			<input disabled type="text" bind:value={data.location} />
 		</label>
 
-		<label class="contents">
+		<div class="contents">
 			Archive all Messages
 			<input type="checkbox" class="mx-auto" bind:checked={archiveAll} />
-		</label>
+		</div>
 
 		{#if !archiveAll}
 			<div class="col-span-2 flex-1 row-span-2 grid grid-cols-2 gap-2">
@@ -110,7 +108,7 @@
 			</div>
 		{/if}
 
-		<label class="contents" for="deleteMessages">
+		<div class="contents" for="deleteMessages">
 			<span>
 				Delete Messages
 				<!-- svelte-ignore missing-declaration -->
@@ -123,7 +121,7 @@
 				{/if}
 			</span>
 			<input type="checkbox" class="mx-auto" bind:checked={deleteMessages} />
-		</label>
+		</div>
 		<!--
 				Due to how Discord APIs work, mass-deleting messages is not a thing anyway.
 				https://github.com/therealguy90/foundrytodiscord/issues/30
