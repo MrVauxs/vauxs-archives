@@ -1,5 +1,6 @@
 # Vauxs' Archives
 
+[![Release Creation](https://github.com/MrVauxs/vauxs-archives/actions/workflows/main.yml/badge.svg)](https://github.com/MrVauxs/vauxs-archives/actions/workflows/main.yml)
 ![All Downloads](https://img.shields.io/github/downloads/MrVauxs/vauxs-archives/total?color=purple&label=All%20Downloads)
 ![Latest Version Downloads](https://img.shields.io/github/downloads/MrVauxs/vauxs-archives/latest/total?color=purple&label=Latest%20Version%20Downloads&sort=semver)
 [![Forge Installs](https://img.shields.io/badge/dynamic/json?label=Forge%20Installs&query=package.installs&suffix=%25&url=https%3A%2F%2Fforge-vtt.com%2Fapi%2Fbazaar%2Fpackage%2Fvauxs-archives&colorB=4aa94a)](https://forge-vtt.com/bazaar#package=vauxs-archives)
