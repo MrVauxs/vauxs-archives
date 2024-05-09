@@ -26,6 +26,7 @@
       "found": "No Archives Found"
     },
     "create": "Create an Archive",
+    "createOrOpen": "Create an Archive (Right-Click to Open Archives)",
     "add": "Add an existing Archive",
     "remove": "Remove selected Archive",
     "open": "Open Archive",

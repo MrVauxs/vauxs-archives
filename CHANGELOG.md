@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [1.1.0] - 2024-05-09
+
+### Added
+
+- "Export as .txt" button when you Open an Archive.
+
 ## [1.0.6] - 2024-04-02
 
 ### Fixed

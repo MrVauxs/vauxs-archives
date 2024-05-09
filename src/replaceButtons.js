@@ -16,7 +16,7 @@ export function registerReplaceButtons() {
 			// Remove original Foundry functionality
 			button.unbind();
 			// Replace the tooltip
-			button.attr("data-tooltip", "vauxs-archives.create");
+			button.attr("data-tooltip", "vauxs-archives.createOrOpen");
 			button.attr("data-tooltip-position", "top");
 			button.find("i").removeClass("fa-save").addClass("fa-archive");
 			// Open the archive creation dialog

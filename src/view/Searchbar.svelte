@@ -21,6 +21,13 @@
 	});
 
 	$: if (newMessages.length !== $messages.length) messages.set(newMessages);
+
+	function exportChatLog() {
+		const log = originalMessages.map((m) => m.export()).join("\n---------------------------\n");
+		let date = new Date().toDateString().replace(/\s/g, "-");
+		const filename = `fvtt-log-${date}.txt`;
+		saveDataToFile(log, "text/plain", filename);
+	}
 </script>
 
 <div class="vauxs-archive">
@@ -47,8 +54,8 @@
 			<button disabled data-tooltip="To Be Added; Request any additions here!" data-tooltip-direction="UP">
 				<i class="fa-solid fa-transporter-empty m-0"></i>
 			</button>
-			<button disabled data-tooltip="To Be Added; Request any additions here!" data-tooltip-direction="UP">
-				<i class="fa-solid fa-transporter-empty m-0"></i>
+			<button on:click={() => exportChatLog()} data-tooltip="Export as .txt" data-tooltip-direction="UP">
+				<i class="fa-solid fa-file-export m-0" />
 			</button>
 		</div>
 		<input class="h-10" type="text" bind:value={string} placeholder="Search..." />
