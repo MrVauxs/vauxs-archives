@@ -56,7 +56,7 @@ const setData: (SettingRegistration & { key: string })[] = [
 		scope: "world",
 		config: false,
 		type: Array,
-		onChange: (value) => { settings.archives = value as object[]; },
+		onChange: (value) => { settings.archives = value as Data[]; },
 		default: [],
 	},
 ];
