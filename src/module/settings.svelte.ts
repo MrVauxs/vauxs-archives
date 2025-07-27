@@ -1,32 +1,63 @@
+import type { Data } from "$lib/utils";
 import type { SettingRegistration } from "foundry-pf2e/foundry/client/helpers/client-settings.mjs";
 import { id } from "moduleJSON";
 
 export interface Settings {
-	permission: number;
-	seeActors: boolean;
+	loadLastArchive: boolean;
+	replaceButtons: boolean;
+	removeButton: boolean;
+	archives: Data[];
 }
 
 const settings: Settings = $state({
-	permission: 2,
-	seeActors: false,
+	loadLastArchive: false,
+	replaceButtons: true,
+	removeButton: false,
+	archives: [],
 });
 
 const setData: (SettingRegistration & { key: string })[] = [
 	{
-		key: "permission",
-		name: "Minimum Permissions",
-		hint: "Which permission level at which an user is trusted to not have to prompt for summoning confirmations.",
+		key: "loadLastArchive",
+		name: "vauxs-archives.settings.loadLastArchive.title",
+		hint: "vauxs-archives.settings.loadLastArchive.hint",
+		scope: "user",
 		config: true,
+		type: Boolean,
+		onChange: (value) => { settings.loadLastArchive = value as boolean; },
+		default: false,
+	},
+	{
+		key: "replaceButtons",
+		name: "vauxs-archives.settings.replaceButtons.title",
+		hint: "vauxs-archives.settings.replaceButtons.hint",
 		scope: "world",
-		default: 2,
-		type: Number,
-		choices: {
-			1: "Player",
-			2: "Trusted Player",
-			3: "Assistant GM",
-			4: "Game Master",
-		},
-		onChange: (choice: any) => { settings.permission = choice; },
+		config: true,
+		type: Boolean,
+		default: true,
+		onChange: (value) => { settings.replaceButtons = value as boolean; },
+		requiresReload: true,
+	},
+	{
+		key: "removeButton",
+		name: "vauxs-archives.settings.removeButton.title",
+		hint: "vauxs-archives.settings.removeButton.hint",
+		scope: "world",
+		config: true,
+		type: Boolean,
+		default: false,
+		onChange: (value) => { settings.removeButton = value as boolean; },
+		requiresReload: true,
+	},
+	{
+		key: "archives",
+		name: "vauxs-archives.settings.archives.title",
+		hint: "vauxs-archives.settings.archives.hint",
+		scope: "world",
+		config: false,
+		type: Array,
+		onChange: (value) => { settings.archives = value as object[]; },
+		default: [],
 	},
 ];
 
