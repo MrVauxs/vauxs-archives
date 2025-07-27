@@ -1,4 +1,3 @@
-# From https://github.com/League-of-Foundry-Developers/FoundryVTT-Module-Template/blob/master/.github/workflows/main.yml
 name: Release Creation
 
 on:
@@ -8,85 +7,82 @@ on:
 jobs:
     build:
         runs-on: ubuntu-latest
+        permissions:
+            contents: write
         steps:
+            # region Preparation
             - uses: actions/checkout@v4
+            - uses: oven-sh/setup-bun@v2
 
-            # get part of the tag after the `v`
-            - name: Extract tag version number
+            - name: Extract version from tag without the v
               id: get-version
-              run: echo "version-without-v=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+              run: echo "v=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
 
-            # Substitute the Manifest and Download URLs in the `module.json`.
+              # https://stackoverflow.com/questions/61919141/read-json-file-in-github-actions
+            - name: Get Module JSON
+              id: set_var
+              run: |
+                  echo "PACKAGE_JSON=$(jq -c . < module.json)" >> $GITHUB_OUTPUT
+
+            - name: Get Module ID
+              id: module_id
+              run: echo "module_id=${{fromJson(steps.set_var.outputs.PACKAGE_JSON).id}}" >> "$GITHUB_OUTPUT"
+
+            - name: Get Module Title
+              id: title
+              run: echo "title=${{fromJson(steps.set_var.outputs.PACKAGE_JSON).title}}" >> "$GITHUB_OUTPUT"
+
+            - name: Install packages
+              run: bun i --frozen-lockfile
+              # endregion
+
+              # region Actual Work Steps
             - name: Substitute Manifest and Download Links For Versioned Ones
               id: sub_manifest_link_version
+              uses: microsoft/variable-substitution@v1
+              with:
+                  files: module.json
+              env:
+                  version: ${{ steps.get-version.outputs.v }}
+                  manifest: https://github.com/${{ github.repository }}/releases/latest/download/module.json
+                  download: https://github.com/${{ github.repository }}/releases/download/${{ github.event.release.tag_name }}/module.zip
+
+            - name: Substitute manifest for prerelease
+              if: github.event.release.prerelease
+              id: sub_prerelease_manifest_version
               uses: devops-actions/variable-substitution@v1.2
               with:
-                  files: "module.json"
+                  files: module.json
               env:
-                  version: ${{steps.get-version.outputs.version-without-v}}
-                  url: https://github.com/${{github.repository}}
-                  manifest: https://github.com/${{github.repository}}/releases/latest/download/module.json
-                  changelog: https://github.com/${{github.repository}}/releases/tag/${{github.event.release.tag_name}}
-                  download: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/module.zip
+                  manifest: https://raw.githubusercontent.com/${{ github.repository }}/next/module.json
 
-            # Install packages.
-            - run: npm ci
+            - name: Build distribution
+              run: bun run build
 
-            # Build distribution.
-            - run: npm run build
+              # Create a zip file with all files required by the module to add to the release.
+            - name: Bundle into ZIP file
+              run: zip -r9 ./module.zip module.json assets/ lang/ dist/ packs/ CHANGELOG.md LICENSE README.md
 
-            - name: Get changelog release info
-              id: changelog
-              uses: release-flow/keep-a-changelog-action@v3
-              with:
-                  command: query
-                  version: ${{ steps.get-version.outputs.version-without-v }}
-
-            - name: Update the Changelog.md file with only the latest version.
-              run: echo "${{ steps.changelog.outputs.release-notes }}" > CHANGELOG.md
-
-            # Create a zip file with all files required by the module to add to the release.
-            - run: zip -r ./module.zip module.json index.js index.js.map style.css assets/ dist/ lang/ packs/ LICENSE AUTHORS CHANGELOG.md
-
-            # Create a release for this specific version.
-            - name: Update Release with Files
+              # Create a release for this specific version.
+            - name: Update release with files
               id: create_version_release
-              uses: ncipollo/release-action@v1.14.0
+              uses: ncipollo/release-action@v1
               with:
-                  allowUpdates: true # Set this to false if you want to prevent updating existing releases.
-                  name: ${{ steps.changelog.outputs.version }}
-                  body: ${{ steps.changelog.outputs.release-notes }}
                   token: ${{ secrets.GITHUB_TOKEN }}
+                  allowUpdates: true
+                  omitDraftDuringUpdate: true
+                  omitBodyDuringUpdate: true
+                  omitPrereleaseDuringUpdate: true
+                  name: ${{ steps.get-version.outputs.version-without-v }}
                   artifacts: "./module.json, ./module.zip"
 
-            # Upload workflow
-            - uses: actions/upload-artifact@v4
-              with:
-                  name: manifest
-                  path: module.json
-    upload:
-        needs: build
-        runs-on: ubuntu-latest
-        # prettier-ignore
-        if: '!github.event.release.prerelease'
-        steps:
-            - name: Check for login info
+            - name: Publish to FoundryVTT
+              uses: cs96and/FoundryVTT-release-package@v1.0.2
+              if: ${{ !github.event.release.prerelease && env.PACKAGE_TOKEN }}
               env:
-                  super_secret: ${{ secrets.FOUNDRY_ADMIN_USERNAME }}
-              if: ${{ env.super_secret == '' }}
-              run: 'echo "echo The FoundryVTT login secrets have not been made; echo please go to \"settings \> secrets \> actions\" to create it"'
-
-            - uses: actions/download-artifact@v4
+                  PACKAGE_TOKEN: ${{ secrets.PACKAGE_TOKEN }}
               with:
-                  name: manifest
+                  package-token: ${{ env.PACKAGE_TOKEN }}
+                  manifest-url: https://github.com/${{ github.repository }}/releases/download/${{ github.event.release.tag_name }}/module.json
 
-            # Publish to FoundryVTT
-            - name: Publish to Foundry VTT Repo
-              id: publish_foundry_repo
-              run: npx @ghost-fvtt/foundry-publish@3.0.0
-              env:
-                  FVTT_MANIFEST_PATH: "module.json"
-                  FVTT_USERNAME: ${{ secrets.FOUNDRY_ADMIN_USERNAME }}
-                  FVTT_PASSWORD: ${{ secrets.FOUNDRY_ADMIN_PASSWORD }}
-              if: ${{ env.FVTT_USERNAME }}
-
+                  # endregion
