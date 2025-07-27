@@ -1,5 +1,5 @@
 {
-	"name": "vauxs-module-template",
+	"name": "vauxs-archives",
 	"type": "module",
 	"private": true,
 	"license": "MIT",
@@ -24,6 +24,7 @@
 		"eslint": "^9.32.0",
 		"eslint-plugin-antfu": "^3.1.1",
 		"eslint-plugin-format": "^1.0.1",
+		"eslint-plugin-svelte": "^3.10.1",
 		"foundry-pf2e": "github:7H3LaughingMan/foundry-pf2e",
 		"foundryvtt-sync": "github:MrVauxs/FoundryVTT-Sync",
 		"postcss-prefixwrap": "^1.56.0",

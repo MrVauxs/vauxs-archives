@@ -1,4 +1,4 @@
-import type { Plugin, UserConfig } from "vite";
+import type { UserConfig } from "vite";
 import { existsSync, mkdir, writeFileSync } from "node:fs";
 import path from "node:path";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
@@ -7,7 +7,7 @@ import postcssPresetEnv from "postcss-preset-env";
 import { sveltePreprocess } from "svelte-preprocess";
 import { defineConfig } from "vite";
 import lucidePreprocess from "vite-plugin-lucide-preprocess";
-import moduleJSON from "./module.json" with { type: "json" };
+import moduleJSON from "./module.json";
 
 // import vttSync from "foundryvtt-sync";
 // import tailwindcss from "@tailwindcss/vite";
@@ -15,6 +15,7 @@ import moduleJSON from "./module.json" with { type: "json" };
 // import PostCSSReplace from "postcss-replace";
 
 const modulePath = `modules/${moduleJSON.id}`;
+const port = 40000;
 // const cssId = moduleJSON.flags.css.id;
 
 const entry = "index.ts";
@@ -69,10 +70,10 @@ export default defineConfig(({ mode }) => {
 			open: "/join",
 			proxy: {
 				// Serves static files from main Foundry server.
-				[`^(/${modulePath}/(assets|lang|packs))`]: "http://localhost:30000",
+				[`^(/${modulePath}/(assets|lang|packs))`]: `http://localhost:${port}`,
 
 				// All other paths besides package ID path are served from main Foundry server.
-				[`^(?!/${modulePath}/)`]: "http://localhost:30000",
+				[`^(?!/${modulePath}/)`]: `http://localhost:${port}`,
 
 				// Rewrite incoming `module-id.js` request from Foundry to the dev server `index.ts`.
 				[`/${modulePath}/dist/${moduleJSON.id}.js`]: {
@@ -81,7 +82,7 @@ export default defineConfig(({ mode }) => {
 				},
 
 				// Enable socket.io from main Foundry server.
-				"/socket.io": { target: "ws://localhost:30000", ws: true },
+				"/socket.io": { target: `ws://localhost:${port}`, ws: true },
 			},
 		},
 		build: {

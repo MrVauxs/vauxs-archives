@@ -1,3 +1,6 @@
+import type { ArchiveMenu } from "./module/Archive";
+import type { Settings } from "./module/settings.svelte";
+
 declare module "vite/types/customEvent.d.ts" {
 	interface CustomEventMap {
 		"foundryvtt-compendium-sync:vtt-update": { json: any; dir: string; once: boolean };
@@ -10,5 +13,9 @@ declare module "vite/types/customEvent.d.ts" {
 declare global {
 	interface Window {
 		foundrySync: Record<string, () => void>;
+		vauxsArchives: {
+			ArchiveMenu: typeof ArchiveMenu;
+			settings: Settings;
+		};
 	}
 }
