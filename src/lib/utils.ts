@@ -55,3 +55,17 @@ export function addToArchives(data: Data) {
 	const archives = game.settings.get("vauxs-archives", "archives") as Settings["archives"];
 	game.settings.set("vauxs-archives", "archives", [...archives, data]);
 }
+
+export function readonly<T extends Record<string | symbol, any>>(base_obj: T) {
+	return new Proxy(base_obj, {
+		get(_, key) {
+			if (base_obj[key] != null && typeof base_obj[key] === "object") {
+				return readonly(base_obj[key]);
+			}
+			return Reflect.get(base_obj, key);
+		},
+		set() {
+			throw new Error("Cannot set on a readonly variable!");
+		},
+	});
+}

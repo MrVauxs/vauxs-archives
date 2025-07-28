@@ -1,5 +1,6 @@
 import type { Data } from "$lib/utils";
 import type { SettingRegistration } from "foundry-pf2e/foundry/client/helpers/client-settings.mjs";
+import { readonly } from "$lib/utils";
 import { id } from "moduleJSON";
 
 export interface Settings {
@@ -72,4 +73,6 @@ Hooks.once("init", () => {
 	}
 });
 
-export { settings };
+const readonlySettings = readonly(settings);
+
+export { readonlySettings as settings };
