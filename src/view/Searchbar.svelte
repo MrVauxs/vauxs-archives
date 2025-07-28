@@ -26,7 +26,7 @@
 		const log = originalMessages.map((m) => m.export()).join("\n---------------------------\n");
 		let date = new Date().toDateString().replace(/\s/g, "-");
 		const filename = `fvtt-log-${date}.txt`;
-		saveDataToFile(log, "text/plain", filename);
+		foundry.utils.saveDataToFile(log, "text/plain", filename);
 	}
 </script>
 
@@ -67,8 +67,8 @@
 		flex: 0;
 
 		& input {
-			color: var(--color-text-dark-primary);
-			background: url(../ui/parchment.jpg) repeat;
+			background: var(--color-cool-5);
+			color: var(--input-text-color);
 		}
 	}
 </style>

@@ -1,8 +1,8 @@
 <svelte:options accessors={true} />
 
 <script>
-	import { ApplicationShell } from "#runtime/svelte/component/core";
-	import { TJSTinyMCE } from "#standard/component";
+	import { ApplicationShell } from "#runtime/svelte/component/application";
+	import { TJSTinyMCE } from "#standard/component/fvtt/editor";
 	import { mId, archives } from "$lib/settings.js";
 	import { i, getJSON, dev } from "$lib/utils.js";
 	import { getContext } from "svelte";
@@ -20,7 +20,7 @@
 	const loadLastArchive = game.modules.get(mId).api.loadLastArchiveStore;
 
 	async function addArchive() {
-		const fp = new FilePicker({
+		const fp = new foundry.applications.apps.FilePicker.implementation({
 			current: `worlds/${game.world.id}`,
 			type: "text",
 			callback: async (location) => {
@@ -81,12 +81,12 @@
 		}
 	}
 
-	async function popOut(messages) {
+	async function popOut(messages, data) {
 		if (typeof messages === "string") {
 			const { json } = await getJSON(messages);
 			messages = json.messages || json;
 		}
-		new VArchChatLogClass({}, messages).renderPopout();
+		new VArchChatLogClass({ vArchData: data }, messages).renderPopout();
 	}
 
 	$: if (selectedArchive) storeTitle.set(i("title") + " - " + selectedArchive.title);
@@ -218,7 +218,7 @@
 						<div class="varch-code p-0.5 text-xs text-center">
 							{selectedArchive.location}
 						</div>
-						<button on:click={() => popOut(response.json.messages || response.json)}>{i("open")}</button>
+						<button on:click={() => popOut(response.json.messages || response.json, response.json?.data ?? {id: 'vauxs-archives'})}>{i("open")}</button>
 
 						<!--
 							Replaced in favor of having a dedicated popout button

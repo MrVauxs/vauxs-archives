@@ -26,13 +26,13 @@
 		const worldPath = folderPath.split("/").slice(0, -1).join("/");
 
 		// Check if chat-archives folder exists, create if not.
-		await FilePicker.browse("data", worldPath).then(async (result) => {
+		await foundry.applications.apps.FilePicker.implementation.browse("data", worldPath).then(async (result) => {
 			if (!result.dirs.includes(folderPath)) {
-				await FilePicker.createDirectory("data", folderPath);
+				await foundry.applications.apps.FilePicker.implementation.createDirectory("data", folderPath);
 			}
 		});
 
-		const response = await FilePicker.upload("data", folderPath, file);
+		const response = await foundry.applications.apps.FilePicker.implementation.upload("data", folderPath, file);
 
 		if (response && response.status === "success" && deleteMessages) {
 			game.messages.documentClass.deleteDocuments(

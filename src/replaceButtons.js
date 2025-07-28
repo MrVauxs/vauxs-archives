@@ -11,14 +11,17 @@ export function registerReplaceButtons() {
 	const removeButton = settings.getStore("removeButton");
 	if (get(replaceButtons)) {
 		Hooks.on("renderChatLog", (app, html) => {
-			const button = $(html).find(".export-log");
+			const button = $(html).find(`[data-action="export"]`);
 
 			// Remove original Foundry functionality
 			button.unbind();
+			button.attr("data-action", "");
+
 			// Replace the tooltip
 			button.attr("data-tooltip", "vauxs-archives.createOrOpen");
 			button.attr("data-tooltip-position", "top");
-			button.find("i").removeClass("fa-save").addClass("fa-archive");
+			button.removeClass("fa-floppy-disk").addClass("fa-archive");
+
 			// Open the archive creation dialog
 			button.on("click", () => createArchive());
 			button.on("contextmenu", () => openArchive());
@@ -27,7 +30,7 @@ export function registerReplaceButtons() {
 
 	if (get(removeButton)) {
 		Hooks.on("renderChatLog", (app, html) => {
-			$(html).find(".delete.chat-flush").remove();
+			$(html).find(`[data-action="flush"]`).remove();
 
 			$(html).find(".control-buttons").addClass("no-flush-button");
 		});

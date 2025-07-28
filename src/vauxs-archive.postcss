@@ -29,7 +29,7 @@
 }
 
 .vce-chat-archive-log {
-	.message-delete {
+	.message-delete, a.chat-control {
 		display: none;
 	}
 }
@@ -58,3 +58,11 @@
 	@apply bg-gray-700 text-white px-1 rounded-sm;
 }
 
+#interface.themed.theme-light ~ section .vauxs-archive input {
+	background: rgba(255, 255, 255, 0.6);
+}
+
+#interface.themed.theme-dark ~ section .vauxs-archive button.shadow-black.shadow-inner {
+	background-color: var(--button-text-color);
+	color: var(--button-background-color);
+}
