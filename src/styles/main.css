@@ -1,0 +1,9 @@
+.vce-chat-archive-log {
+	& .window-content {
+		padding: 0;
+	}
+	& .chat-scroll {
+		scrollbar-width: thin;
+		overflow: hidden scroll;
+	}
+}

@@ -1,5 +1,6 @@
 import type { ArchiveMenu } from "./module/Archive";
 import type { Settings } from "./module/settings.svelte";
+import type { initVaChatLog } from "./module/VAChatLog/index.svelte";
 
 declare module "vite/types/customEvent.d.ts" {
 	interface CustomEventMap {
@@ -16,6 +17,7 @@ declare global {
 		vauxsArchives: {
 			ArchiveMenu: typeof ArchiveMenu;
 			settings: Settings;
+			VAChatLog?: ReturnType<initVaChatLog>;
 		};
 	}
 }
