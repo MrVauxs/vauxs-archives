@@ -10,6 +10,7 @@ export function initVaChatLog() {
 		vaData: {
 			id?: string;
 			title?: string;
+			messages: ReturnType<ChatMessage["toJSON"]>[];
 		};
 	}
 
@@ -22,8 +23,9 @@ export function initVaChatLog() {
 		messages: ChatMessage[] = $state([]);
 		firstLoad: boolean;
 
-		constructor(options: Options, input: ReturnType<ChatMessage["toJSON"]>[]) {
+		constructor(options: Options) {
 			super(options);
+			const input = options.vaData.messages;
 			if (input === void 0 || !input.length) {
 				ui.notifications.error("Vauxs Archives ChatLog encountered an error. See console log for details.", input as any);
 				throw new Error("VArchChatLog requires a collection of messages");
