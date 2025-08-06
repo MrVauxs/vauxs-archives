@@ -25,8 +25,8 @@
 	],
 	"flags": {
 		"css": {
-			"shorthand": "mtemp",
-			"id": "module-template"
+			"shorthand": "varch",
+			"id": "vauxs-archives"
 		},
 		"hotReload": {
 			"extensions": [
@@ -51,7 +51,7 @@
 		{
 			"auto": true,
 			"type": "setup",
-			"url": "modules/module-template/assets/setup.webp"
+			"url": "modules/vauxs-archives/assets/setup.webp"
 		}
 	],
 	"languages": [
