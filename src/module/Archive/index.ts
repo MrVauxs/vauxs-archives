@@ -18,6 +18,7 @@ interface SummonMenuState {
 
 export class ArchiveMenu extends SvelteApplicationMixin(foundry.applications.api.ApplicationV2) {
 	static override DEFAULT_OPTIONS = {
+		classes: ["vce-chat-archive"],
 		position: {
 			width: 650,
 			height: 500,
