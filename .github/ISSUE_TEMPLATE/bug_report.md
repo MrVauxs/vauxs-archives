@@ -27,11 +27,10 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Browser:**
- -
 
-**Foundry Version:**
+- **Foundry Version:**
 
-**Game System:**
+  **Game System:**
 
-**Additional context**
-Add any other context (like other modules installed) about the problem here.
+  **Additional context**
+  Add any other context (like other modules installed) about the problem here.

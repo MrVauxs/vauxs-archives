@@ -24,17 +24,18 @@ Previously meant to be in Vauxs Chat Enhancements, this module is just the archi
 - [ ] Rolls Summary - See the rolls of a given archive summarized, per user.
 
 ## Won't Do
+
 - Chat Merging - You have plenty of other UI modules for that.
 - Saving to Journals - Never used it, found it clunky at best.
 - Parsing .txt or .html files
 
 ### Warning!
+
 Due to DF Chat Enhancements feature of limiting the amount of messages being rendered at once (which Foundry already does as of v10!) it breaks the rendering on chat logs on Vauxs' Archives.
-**You cannot have both of these modules enabled simultaneously.** 
+**You cannot have both of these modules enabled simultaneously.**
 
 ## Preview
 
 ![chrome_R6Y39KqQXO](https://github.com/MrVauxs/vauxs-archives/assets/32039708/016ac5f5-62fc-4a48-9a17-da1c9e55f288)
 
 ![chrome_ACbnVeqohy](https://github.com/MrVauxs/vauxs-archives/assets/32039708/8c738df4-91c0-47fe-a9bd-70a1f96cb5bd)
-
