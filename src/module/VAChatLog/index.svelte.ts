@@ -118,5 +118,14 @@ export function initVaChatLog() {
 		override _getEntryContextOptions() {
 			return [];
 		}
+
+		protected override async _onRender(context: fa.ApplicationRenderContext, options: fa.api.HandlebarsRenderOptions): Promise<void> {
+			await super._onRender(context, options);
+			const controls = this.element.querySelector(".chat-controls") as HTMLElement;
+			if (!controls) return;
+			const button = controls.querySelector("[data-action=\"flush\"]");
+			button?.remove();
+			controls.style.padding = "0px 0px 6px 0px";
+		}
 	};
 }

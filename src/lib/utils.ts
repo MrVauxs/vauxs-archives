@@ -15,6 +15,14 @@ interface Options {
 	deleteAll?: true;
 }
 
+export function todayYYMMDD() {
+	const d = new Date();
+	const y = d.getFullYear().toString().slice(-2);
+	const m = (d.getMonth() + 1).toString().padStart(2, "0");
+	const day = d.getDate().toString().padStart(2, "0");
+	return `${y}/${m}/${day}`;
+}
+
 export async function archiveMessages(data: Partial<Data>, messages: ChatMessage["_source"][], options: Options) {
 	ui.notifications.info("Archiving messages...");
 
