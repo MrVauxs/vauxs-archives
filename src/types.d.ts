@@ -17,7 +17,7 @@ declare global {
 		vauxsArchives: {
 			ArchiveMenu: typeof ArchiveMenu;
 			settings: Settings;
-			VAChatLog?: ReturnType<initVaChatLog>;
+			VAChatLog?: ReturnType<typeof initVaChatLog>;
 		};
 	}
 }
