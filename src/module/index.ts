@@ -1,9 +1,7 @@
-import moduleJSON from "moduleJSON" with { type: "json" };
 import { initVaChatLog } from "./VAChatLog/index.svelte";
+import "./buttons.ts";
 
 Hooks.on("ready", () => {
-	ui.notifications.info(`Running ${moduleJSON.id}!`);
-
 	window.vauxsArchives.VAChatLog = initVaChatLog();
 });
 

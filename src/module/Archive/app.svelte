@@ -42,10 +42,9 @@
 		<hr style="margin:0"/>
 		<div class="list">
 			{#each settings.archives as archive}
-				<div class="archive-row">
+				<div class="archive-row" class:active={selected?.id === archive.id}>
 					<button
 						class="archive-btn"
-						class:active={selected?.id === archive.id}
 						onclick={() => (selected = archive)}
 					>
 						<span class="title">{archive.title}</span>
@@ -142,27 +141,8 @@
 		display: flex;
 		align-items: center;
 		gap: 0.5rem;
-	}
-
-	.archive-btn {
-		display: flex;
-		flex: 1 1 auto;
-		flex-direction: column;
-		justify-content: center;
-		gap: 0.125rem;
-		height: 3rem;
-		min-height: 3rem;
-		padding: 0.5rem 0.75rem;
-		border: none;
+		transition: background 0.3s;
 		border-radius: 0.5rem;
-		background: transparent;
-		color: var(--text);
-		cursor: pointer;
-		transition: background 0.2s;
-		line-height: 1.1;
-
-		outline: none;
-		box-shadow: none;
 
 		&:hover {
 			background: var(--surface-hover);
@@ -177,6 +157,25 @@
 				hsla(100, 80%, 60%, 0.1),
 			);
 		}
+	}
+
+	.archive-btn {
+		display: flex;
+		flex: 1 1 auto;
+		flex-direction: column;
+		justify-content: center;
+		gap: 0.125rem;
+		height: 3rem;
+		min-height: 3rem;
+		padding: 0.5rem 0.5rem;
+		border: none;
+		background: transparent;
+		color: var(--text);
+		cursor: pointer;
+		line-height: 1.1;
+
+		outline: none;
+		box-shadow: none;
 
 		.title {
 			font-weight: 500;
@@ -188,25 +187,11 @@
 			font-size: 0.6rem;
 			color: var(--text-muted);
 		}
-
-		.delete-icon {
-			z-index: 10;
-			position: absolute;
-			top: 0.5rem;
-			right: 0.5rem;
-			font-size: 0.75rem;
-			color: var(--text-muted);
-			cursor: pointer;
-			transition: color 0.2s;
-
-			&:hover {
-				color: hsl(0 80% 60%);
-			}
-		}
 	}
 
 	.delete-icon {
 		cursor: pointer;
+		padding-right: 1em;
 		font-size: 0.75rem;
 		color: var(--text-muted);
 		transition: color 0.2s;

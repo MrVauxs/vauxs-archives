@@ -30,15 +30,15 @@ export class ArchiveMenu extends SvelteApplicationMixin(foundry.applications.api
 		},
 	};
 
-	static async start(options: archiveOptions) {
-		return new ArchiveMenu({ summonOptions: options }).render({ force: true });
+	static async start(options?: archiveOptions) {
+		return new ArchiveMenu({ archiveOptions: options }).render({ force: true });
 	}
 
 	archiveOptions: archiveOptions;
 
-	constructor(options: DeepPartial<ApplicationConfiguration> & { summonOptions?: archiveOptions }) {
+	constructor(options: DeepPartial<ApplicationConfiguration> & { archiveOptions?: archiveOptions }) {
 		super(options);
-		this.archiveOptions = options?.summonOptions || {};
+		this.archiveOptions = options?.archiveOptions || {};
 	}
 
 	protected override async _prepareContext(): Promise<SummonMenuContext> {
