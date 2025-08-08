@@ -1,39 +1,44 @@
 {
-  "id": "vauxs-archives",
-  "title": "Vauxs' Archives",
-  "description": "Provides a bare-bones Foundry module template repo to get set up with using the TyphonJS Runtime Library and Svelte with ES Modules.",
-  "version": "To Be Replaced",
-  "authors": [
-    {
-      "name": "MrVauxs",
-      "url": "https://mrvauxs.net",
-      "discord": "vauxs",
-      "twitter": "@ThatVauxs",
-      "email": "mrvauxs@gmail.com",
-      "ko-fi": "MrVauxs"
-    }
-  ],
-  "compatibility": {
-    "minimum": "13",
-    "verified": "13"
-  },
-  "esmodules": [
-    "index.js"
-  ],
-  "styles": [
-    "style.css"
-  ],
-  "flags": {
-    "hotReload": {
-      "extensions": [
-        "json"
-      ],
-      "paths": [
-        "lang"
-      ]
-    }
-  },
-  "relationships": {
+	"id": "vauxs-archives",
+	"title": "Vauxs' Archives",
+	"description": "",
+	"version": "dev",
+	"authors": [
+		{
+			"name": "MrVauxs",
+			"url": "https://mrvauxs.net",
+			"discord": "vauxs",
+			"twitter": "@ThatVauxs",
+			"email": "mrvauxs@gmail.com",
+			"ko-fi": "MrVauxs"
+		}
+	],
+	"compatibility": {
+		"minimum": "13",
+		"verified": "13"
+	},
+	"esmodules": [
+		"dist/vauxs-archives.js"
+	],
+	"styles": [
+		"dist/vauxs-archives.css"
+	],
+	"flags": {
+		"css": {
+			"shorthand": "varch",
+			"id": "vauxs-archives"
+		},
+		"hotReload": {
+			"extensions": [
+				"css",
+				"json"
+			],
+			"paths": [
+				"styles"
+			]
+		}
+	},
+	"relationships": {
 		"conflicts": [
 			{
 				"id": "df-chat-enhance",
@@ -41,18 +46,25 @@
 				"reason": "DF Chat Enhancements is an outdated module, replaced by other modules including Vauxs' Archives, and breaks Vauxs' Archives chatlog browsing."
 			}
 		]
-  },
-  "languages": [
-    {
-      "lang": "en",
-      "name": "English",
-      "path": "lang/en.json"
-    }
-  ],
-  "url": "https://github.com/MrVauxs/vauxs-archives",
-  "readme": "https://github.com/MrVauxs/vauxs-archives/blob/master/README.md",
-  "bugs": "https://github.com/MrVauxs/vauxs-archives/issues",
-  "changelog": "https://github.com/MrVauxs/vauxs-archives/releases/latest/",
-  "manifest": "https://github.com/MrVauxs/vauxs-archives/releases/latest/download/module.json",
-  "download": "https://github.com/MrVauxs/vauxs-archives/releases/download/0.0.0/module.zip"
+	},
+	"media": [
+		{
+			"auto": true,
+			"type": "setup",
+			"url": "modules/vauxs-archives/assets/setup.webp"
+		}
+	],
+	"languages": [
+		{
+			"lang": "en",
+			"name": "English",
+			"path": "lang/en.json"
+		}
+	],
+	"url": "https://github.com/MrVauxs/vauxs-archives",
+	"readme": "https://github.com/MrVauxs/vauxs-archives/blob/master/README.md",
+	"bugs": "https://github.com/MrVauxs/vauxs-archives/issues",
+	"changelog": "https://github.com/MrVauxs/vauxs-archives/releases/latest/",
+	"manifest": "replaced in production",
+	"download": "replaced in production"
 }

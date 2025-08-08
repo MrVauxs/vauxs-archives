@@ -1,0 +1,19 @@
+button#vauxs-archives {
+	background: #68116b80;
+}
+
+.vce-chat-archive {
+	& .window-content {
+		padding: 0;
+	}
+}
+
+.vce-chat-archive-log {
+	& .window-content {
+		padding: 0;
+	}
+	& .chat-scroll {
+		scrollbar-width: thin;
+		overflow: hidden scroll;
+	}
+}
