@@ -102,7 +102,7 @@
 	</article>
 </main>
 
-<style lang="scss">
+<style>
 	:global(.theme-dark) :global(.vauxs-archives) {
 		--bg: hsl(220 20% 10%);
 		--surface: hsla(219, 14%, 28%, 0.4);
