@@ -16,6 +16,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [2.0.0] - 2025-08-08
+
+### Changed
+
+- Everything (but should be backwards compatible)
+- V13 support. Dropped V12 support.
+
 ## [1.1.0] - 2024-05-09
 
 ### Added
