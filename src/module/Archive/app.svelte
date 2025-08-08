@@ -63,9 +63,9 @@
 		</div>
 
 		<footer>
-			<label for="varch-title">Make a new archive</label>
+			<label for="varch-title">Quick Make-An-Archive</label>
 			<input id="varch-title" type="text" bind:value={title} placeholder={`Archive ${todayYYMMDD()}`} />
-			<button onclick={submit}>Create</button>
+			<button onclick={submit}>Archive All Messages</button>
 		</footer>
 	</aside>
 
@@ -75,7 +75,7 @@
 			<p class="meta">
 				{new Date(selected.timestamp).toLocaleString()}
 				<br>
-				{selected.location}
+				<span style="font-size: 0.75rem;">{selected.location}</span>
 			</p>
 			<p class="description">{selected.description}</p>
 			<button class="open-btn" onclick={() => open(selected!)}>Open Archive</button>
