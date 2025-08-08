@@ -7,7 +7,6 @@ const renderChat = Hooks.on("renderChatLog", (_: ChatLog, html: HTMLElement) => 
 	if (!settings.putButtonInRolls) addArchiveButton(rollButtons as HTMLElement);
 
 	const deleteButton = html.querySelector("[data-action=\"flush\"]");
-	console.log(html, deleteButton);
 	if (deleteButton && settings.removeButton) {
 		deleteButton.remove();
 	}
