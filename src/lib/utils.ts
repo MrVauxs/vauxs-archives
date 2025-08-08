@@ -11,8 +11,8 @@ export interface Data {
 }
 
 interface Options {
-	deleteMessages?: true;
-	deleteAll?: true;
+	deleteMessages?: boolean;
+	deleteAll?: boolean;
 }
 
 export function todayYYMMDD() {

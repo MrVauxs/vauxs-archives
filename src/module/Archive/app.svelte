@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { archiveMessages, todayYYMMDD, type Data } from "$lib/utils";
+	import { ArchiveCreator } from "../ArchiveCreator";
 	import { settings } from "../settings.svelte";
 
 	let title = $state("");
@@ -71,9 +72,17 @@
 		</div>
 
 		<footer>
+			<div style="
+				display: flex; flex-direction: column; gap: 0.3rem;
+				border: 1px hsl(202, 78%, 63%, 50%) solid; border-radius: 8px;
+				padding: 6px; background: var(--surface);
+			">
 			<label for="varch-title">Quick Make-An-Archive</label>
 			<input id="varch-title" type="text" bind:value={title} placeholder={`Archive ${todayYYMMDD()}`} />
 			<button onclick={submit}>Archive All Messages</button>
+			</div>
+			<hr style="margin: 0;">
+			<button onclick={() => ArchiveCreator.start()}>Open Archive Creator</button>
 		</footer>
 	</aside>
 
