@@ -8,12 +8,14 @@ export interface Settings {
 	replaceButtons: boolean;
 	removeButton: boolean;
 	archives: Data[];
+	putButtonInRolls: boolean;
 }
 
 const settings: Settings = $state({
 	loadLastArchive: false,
 	replaceButtons: true,
 	removeButton: false,
+	putButtonInRolls: false,
 	archives: [],
 });
 
@@ -32,7 +34,7 @@ const setData: (SettingRegistration & { key: string })[] = [
 		key: "replaceButtons",
 		name: "vauxs-archives.settings.replaceButtons.title",
 		hint: "vauxs-archives.settings.replaceButtons.hint",
-		scope: "world",
+		scope: "user",
 		config: true,
 		type: Boolean,
 		default: true,
@@ -43,7 +45,7 @@ const setData: (SettingRegistration & { key: string })[] = [
 		key: "removeButton",
 		name: "vauxs-archives.settings.removeButton.title",
 		hint: "vauxs-archives.settings.removeButton.hint",
-		scope: "world",
+		scope: "user",
 		config: true,
 		type: Boolean,
 		default: false,
@@ -59,6 +61,17 @@ const setData: (SettingRegistration & { key: string })[] = [
 		type: Array,
 		onChange: (value) => { settings.archives = value as Data[]; },
 		default: [],
+	},
+	{
+		key: "putButtonInRolls",
+		name: "vauxs-archives.settings.putButtonInRolls.title",
+		hint: "vauxs-archives.settings.putButtonInRolls.hint",
+		scope: "user",
+		config: true,
+		type: Boolean,
+		default: false,
+		onChange: (value) => { settings.removeButton = value as boolean; },
+		requiresReload: true,
 	},
 ];
 

@@ -2,18 +2,13 @@
 	"vauxs-archives": {
 		"title": "Vauxs' Archives",
 		"settings": {
-			"loadLastArchive": {
-				"title": "Load Last Archive",
-				"hint": "Whether to automatically load the latest chat archive when opening the menu."
-			},
-			"archive": {
-				"title": "Open Chat Archives",
-				"hint": "Opens a separate window to browse, create, or add chat archives.",
-				"button": "Open"
-			},
 			"replaceButtons": {
 				"title": "Replace the Export Chat Log Button",
-				"hint": "Replaces the \"Export Chat Log\" button in chat with \"Create Archive\"."
+				"hint": "Replaces the \"Export Chat Log\" button in chat with \"Open Vauxs Archives\"."
+			},
+			"putButtonInRolls": {
+				"title": "Put the Archive Button in Roll Options",
+				"hint": "Puts the archive button alongside the roll options, giving you access to the archives without expanding the chatlog tab."
 			},
 			"removeButton": {
 				"title": "Remove the Clear Chat Log Button",
