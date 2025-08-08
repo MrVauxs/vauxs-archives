@@ -6,9 +6,17 @@
 	let selected: Data | undefined = $state();
 
 	async function submit() {
+		const messages = game.messages.contents as unknown as ChatMessage["_source"][];
+		const rolls = messages.filter(x => x.rolls.length);
 		await archiveMessages(
-			{ title: title.trim() || `Archive ${todayYYMMDD()}` },
-			game.messages.contents as unknown as ChatMessage["_source"][],
+			{
+				title: title.trim() || `Archive ${todayYYMMDD()}`,
+				description: `
+					Archived on ${new Date().toDateInputString()}, this archive contains ${messages.length} messages between ${new Date(messages.at(0)!.timestamp).toLocaleTimeString()} to ${new Date(messages.at(-1)!.timestamp).toLocaleTimeString()}.
+					It has ${rolls.length} dice rolls.
+				`
+			},
+			messages,
 			{}
 		);
 	}
