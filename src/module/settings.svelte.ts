@@ -81,14 +81,7 @@ Hooks.once("init", () => {
 	}
 
 	for (const set of setData) {
-		let setting = game.settings.get(id, set.key);
-		if (set.key === "archives") {
-			const archives = setting as Data[] | [string, Data][];
-			if (archives.find(x => Array.isArray(x))) {
-				setting = archives.map(x => Array.isArray(x) ? x[1] : x);
-				game.settings.set(id, set.key, setting);
-			}
-		}
+		const setting = game.settings.get(id, set.key);
 		// @ts-expect-error Never say never
 		settings[set.key as keyof Settings] = setting;
 	}

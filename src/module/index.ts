@@ -1,8 +1,18 @@
+import type { Data } from "$lib/utils.ts";
+import { id } from "moduleJSON";
+import { settings } from "./settings.svelte.ts";
 import { initVaChatLog } from "./VAChatLog/index.svelte";
 import "./buttons.ts";
 
 Hooks.on("ready", () => {
 	window.vauxsArchives.VAChatLog = initVaChatLog();
+
+	// V12 -> V13
+	const archives = settings.archives as Data[] | [string, Data][];
+	if (archives.find(x => Array.isArray(x))) {
+		const fixedArchives = archives.map(x => Array.isArray(x) ? x[1] : x);
+		game.settings.set(id, "archives", fixedArchives);
+	}
 });
 
 if (import.meta.hot) {
