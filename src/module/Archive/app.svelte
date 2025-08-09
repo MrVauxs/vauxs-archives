@@ -50,14 +50,14 @@
 		<header style="text-align:center;">{settings.archives.length} Archives</header>
 		<hr style="margin:0"/>
 		<div class="list">
-			{#each settings.archives as archive}
+			{#each settings.archives.toSorted((a,b) => a.timestamp - b.timestamp) as archive}
 				<div class="archive-row" class:active={selected?.id === archive.id}>
 					<button
 						class="archive-btn"
 						onclick={() => (selected = archive)}
 					>
 						<span class="title">{archive.title}</span>
-						<span class="location">{archive.location}</span>
+						<!-- <span class="location">{archive.location}</span> -->
 					</button>
 					<!-- svelte-ignore a11y_click_events_have_key_events -->
 					<i
@@ -94,7 +94,7 @@
 				<br>
 				<span style="font-size: 0.75rem;">{selected.location}</span>
 			</p>
-			<p class="description">{selected.description}</p>
+			{#if selected.description}<p class="description">{@html selected.description}</p>{/if}
 			<button class="open-btn" onclick={() => open(selected!)}>Open Archive</button>
 		{:else}
 			<p class="placeholder">Select an archive to view details</p>
@@ -116,7 +116,7 @@
 		--surface: hsl(220 20% 15% / 0.2);
 		--surface-hover: hsl(220 50% 50% / 0.6);
 		--accent: hsl(200 50% 50%);
-		--text: hsl(220 20% 90%);
+		--text: hsl(220 5% 20%);
 		--text-muted: hsl(220 20% 20%);
 	}
 
@@ -168,11 +168,11 @@
 		&.active {
 			outline: none;
 			box-shadow: none;
-			background: linear-gradient(
-				120deg,
-				hsla(200, 80%, 60%, 0.2),
-				hsla(100, 80%, 60%, 0.1),
-			);
+			background: linear-gradient(120deg, hsla(200, 80%, 60%, 0.2), hsla(100, 80%, 60%, 0.1));
+		}
+
+		:global(.theme-light) & {
+			background-color: hsl(200 10% 60%);
 		}
 	}
 
@@ -267,6 +267,13 @@
 	.description {
 		line-height: 1.6;
 		color: var(--text);
+
+		background: var(--input-background-color);
+		padding: 8px;
+		border-width: 2px;
+		border-style: groove;
+		border-color: var(--color-fieldset-border);
+    	border-radius: 8px;
 	}
 
 	.placeholder {

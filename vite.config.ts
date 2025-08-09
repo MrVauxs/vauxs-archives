@@ -60,7 +60,7 @@ export default defineConfig(({ mode }) => {
 		},
 
 		esbuild: {
-			target: ["es2022"],
+			target: ["es2023"],
 		},
 
 		css: { postcss },
@@ -90,7 +90,7 @@ export default defineConfig(({ mode }) => {
 			emptyOutDir: false,
 			sourcemap: true,
 			minify: "terser",
-			target: ["es2020"],
+			target: ["es2023"],
 			terserOptions: {
 				compress: {
 					passes: 3,
@@ -119,7 +119,7 @@ export default defineConfig(({ mode }) => {
 
 		optimizeDeps: {
 			esbuildOptions: {
-				target: "es2022",
+				target: "es2023",
 			},
 		},
 

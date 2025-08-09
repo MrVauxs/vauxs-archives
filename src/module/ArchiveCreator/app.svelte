@@ -1,10 +1,12 @@
 <script lang="ts">
-	import { archiveMessages, type Data } from "$lib/utils";
+	import { archiveMessages, todayYYMMDD, type Data } from "$lib/utils";
 	import type { ArchiveCreator } from "./index.ts";
 
 	let {foundryApp}: { foundryApp: ArchiveCreator } = $props()
 
-	let data = $state({}) as Data;
+	let data = $state({
+		title: `Archive ${todayYYMMDD()}`
+	}) as Data;
 
 	if (!game.messages.contents.length) throw ui.notifications.error("There are no messages to archive!")
 
@@ -31,7 +33,6 @@
 		if (archiveAll) {
 			messages = game.messages.contents as unknown as ChatMessage["_source"][];
 		} else {
-			console.log("????")
 			messages = game.messages.contents.filter((message) => {
 				return (
 					message.timestamp >= (new Date(from).getTime() - offset) &&

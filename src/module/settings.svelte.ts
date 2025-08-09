@@ -4,7 +4,6 @@ import { readonly } from "$lib/utils";
 import { id } from "moduleJSON";
 
 export interface Settings {
-	loadLastArchive: boolean;
 	replaceButtons: boolean;
 	removeButton: boolean;
 	archives: Data[];
@@ -12,7 +11,6 @@ export interface Settings {
 }
 
 const settings: Settings = $state({
-	loadLastArchive: false,
 	replaceButtons: true,
 	removeButton: false,
 	putButtonInRolls: false,
@@ -20,16 +18,6 @@ const settings: Settings = $state({
 });
 
 const setData: (SettingRegistration & { key: string })[] = [
-	{
-		key: "loadLastArchive",
-		name: "vauxs-archives.settings.loadLastArchive.title",
-		hint: "vauxs-archives.settings.loadLastArchive.hint",
-		scope: "user",
-		config: true,
-		type: Boolean,
-		onChange: (value) => { settings.loadLastArchive = value as boolean; },
-		default: false,
-	},
 	{
 		key: "replaceButtons",
 		name: "vauxs-archives.settings.replaceButtons.title",

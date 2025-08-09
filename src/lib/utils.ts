@@ -28,7 +28,7 @@ export async function archiveMessages(data: Partial<Data>, messages: ChatMessage
 
 	data.id ??= foundry.utils.randomID();
 	data.location ??= `worlds/${game.world.id}/chat-archives/${data.id}.json`;
-	data.title ??= `Archive ${data.id.slice(0, 4)}; ${new Date(Date.now()).toDateString()}`;
+	data.title ??= `Archive ${todayYYMMDD()}`;
 	data.timestamp ??= Date.now();
 
 	const json = JSON.stringify({ data, messages }, null, "\t");
