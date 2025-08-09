@@ -50,7 +50,7 @@
 		<header style="text-align:center;">{settings.archives.length} Archives</header>
 		<hr style="margin:0"/>
 		<div class="list">
-			{#each settings.archives.toSorted((a,b) => a.timestamp - b.timestamp) as archive}
+			{#each settings.archives.toSorted((a,b) => b.timestamp - a.timestamp) as archive}
 				<div class="archive-row" class:active={selected?.id === archive.id}>
 					<button
 						class="archive-btn"
