@@ -2,14 +2,17 @@ import type ChatLog from "foundry-pf2e/foundry/client/applications/sidebar/tabs/
 import { settings } from "./settings.svelte";
 
 const renderChat = Hooks.on("renderChatLog", (_: ChatLog, html: HTMLElement) => {
-	const rollButtons = html.querySelector(".control-buttons");
-	if (!rollButtons) return;
-	if (!settings.putButtonInRolls) addArchiveButton(rollButtons as HTMLElement);
+	// Ensure that it is ran last-ish in the Hooks chain.
+	setTimeout(() => {
+		const rollButtons = html.querySelector(".control-buttons");
+		if (!rollButtons) return console.warn("Vauxs Archives | .rollButtons was not found, did not attach Archive button.");
+		if (!settings.putButtonInRolls) addArchiveButton(rollButtons as HTMLElement);
 
-	const deleteButton = html.querySelector("[data-action=\"flush\"]");
-	if (deleteButton && settings.removeButton) {
-		deleteButton.remove();
-	}
+		const deleteButton = html.querySelector("[data-action=\"flush\"]");
+		if (deleteButton && settings.removeButton) {
+			deleteButton.remove();
+		}
+	}, 1);
 });
 
 const renderChatSmall = Hooks.on("renderChatInput", (_: ChatLog, htmlObj: any) => {
