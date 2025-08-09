@@ -12,7 +12,7 @@ const renderChat = Hooks.on("renderChatLog", (_: ChatLog, html: HTMLElement) => 
 		if (deleteButton && settings.removeButton) {
 			deleteButton.remove();
 		}
-	}, 1);
+	}, 10); // 100ms is noticeable, but 10ms should give JS do its thing first
 });
 
 const renderChatSmall = Hooks.on("renderChatInput", (_: ChatLog, htmlObj: any) => {
