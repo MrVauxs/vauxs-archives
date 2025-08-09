@@ -16,6 +16,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [2.1.1] - 2025-08-10
+
+### Changed
+
+- Archives are now sorted from newest to oldest, instead of the opposite.
+- Added some redundancies in hopes of avoiding the Archives button not appearing.
+
 ## [2.1.0] - 2025-08-09
 
 ### Fixed
