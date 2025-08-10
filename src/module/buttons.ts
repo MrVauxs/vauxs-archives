@@ -1,27 +1,21 @@
 import type ChatLog from "foundry-pf2e/foundry/client/applications/sidebar/tabs/chat.mjs";
 import { settings } from "./settings.svelte";
 
-const renderChat = Hooks.on("renderChatLog", (_: ChatLog, html: HTMLElement) => {
-	// Ensure that it is ran last-ish in the Hooks chain.
-	setTimeout(() => {
-		const rollButtons = html.querySelector(".control-buttons");
-		if (!rollButtons) return console.warn("Vauxs Archives | .rollButtons was not found, did not attach Archive button.");
-		if (!settings.putButtonInRolls) addArchiveButton(rollButtons as HTMLElement);
-
-		const deleteButton = html.querySelector("[data-action=\"flush\"]");
-		if (deleteButton && settings.removeButton) {
-			deleteButton.remove();
-		}
-	}, 10); // 100ms is noticeable, but 10ms should give JS do its thing first
-});
-
-const renderChatSmall = Hooks.on("renderChatInput", (_: ChatLog, htmlObj: any) => {
+const renderChat = Hooks.on("renderChatInput", (_: ChatLog, htmlObj: any) => {
 	const rollButtons = htmlObj["#roll-privacy"] as HTMLElement;
 	if (settings.putButtonInRolls) addArchiveButton(rollButtons);
+
+	const chatControls = (htmlObj["#chat-controls"] as HTMLElement).querySelector(".control-buttons")!;
+	if (!settings.putButtonInRolls) addArchiveButton(chatControls as HTMLElement);
 
 	const archiveButton = rollButtons.parentElement!.querySelector("[data-action=\"export\"]");
 	if (archiveButton && settings.replaceButtons) {
 		archiveButton.remove();
+	}
+
+	const deleteButton = chatControls.querySelector("[data-action=\"flush\"]");
+	if (deleteButton && settings.removeButton) {
+		deleteButton.remove();
 	}
 });
 
@@ -43,7 +37,6 @@ function addArchiveButton(el: HTMLElement) {
 if (import.meta.hot) {
 	import.meta.hot.accept();
 	import.meta.hot.dispose(() => {
-		Hooks.off("renderChatLog", renderChat);
-		Hooks.off("renderChatInput", renderChatSmall);
+		Hooks.off("renderChatInput", renderChat);
 	});
 }

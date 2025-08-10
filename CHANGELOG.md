@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [2.1.2] - 2025-08-10
+
+### Fixed
+
+- Fixed the archives button not appearing in V13.347.
+
 ## [2.1.1] - 2025-08-10
 
 ### Changed
