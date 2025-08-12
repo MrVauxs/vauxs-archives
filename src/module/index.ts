@@ -9,8 +9,8 @@ Hooks.on("ready", () => {
 
 	// V12 -> V13
 	const archives = settings.archives as Data[] | [string, Data][];
-	if (archives.find(x => Array.isArray(x))) {
-		const fixedArchives = archives.map(x => Array.isArray(x) ? x[1] : x);
+	if (archives.find(x => Array.isArray(x) || typeof x !== "object")) {
+		const fixedArchives = archives.map(x => Array.isArray(x) ? x[1] : x).filter(Boolean);
 		game.settings.set(id, "archives", fixedArchives);
 	}
 });

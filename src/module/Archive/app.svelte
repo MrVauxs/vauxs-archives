@@ -50,25 +50,37 @@
 		<header style="text-align:center;">{settings.archives.length} Archives</header>
 		<hr style="margin:0"/>
 		<div class="list">
-			{#each settings.archives.toSorted((a,b) => b.timestamp - a.timestamp) as archive}
-				<div class="archive-row" class:active={selected?.id === archive.id}>
-					<button
-						class="archive-btn"
-						onclick={() => (selected = archive)}
-					>
-						<span class="title">{archive.title}</span>
-						<!-- <span class="location">{archive.location}</span> -->
-					</button>
-					<!-- svelte-ignore a11y_click_events_have_key_events -->
-					<i
-						role="button"
-						tabindex="0"
-						class="fas fa-trash-alt delete-icon"
-						onclick={(ev) => onDelete(ev, archive)}
-						title="Delete archive"
-					></i>
-				</div>
-			{/each}
+			<svelte:boundary>
+				{#each settings.archives.toSorted((a,b) => b.timestamp - a.timestamp) as archive}
+					<div class="archive-row" class:active={selected?.id === archive.id}>
+						<svelte:boundary>
+							<button
+								class="archive-btn"
+								onclick={() => (selected = archive)}
+							>
+								<span class="title">{archive.title}</span>
+								<!-- <span class="location">{archive.location}</span> -->
+							</button>
+							<!-- svelte-ignore a11y_click_events_have_key_events -->
+							<i
+								role="button"
+								tabindex="0"
+								class="fas fa-trash-alt delete-icon"
+								onclick={(ev) => onDelete(ev, archive)}
+								title="Delete archive"
+							></i>
+							{#snippet failed(_, reset)}
+								Looks like the archive row element has failed to render. Report this to Vauxs!
+								<button class="open-btn" onclick={reset}>Try Again?</button>
+							{/snippet}
+						</svelte:boundary>
+					</div>
+				{/each}
+				{#snippet failed(_, reset)}
+					Looks like the list element has failed to render. Report this to Vauxs!
+					<button class="open-btn" onclick={reset}>Try Again?</button>
+				{/snippet}
+			</svelte:boundary>
 		</div>
 
 		<footer>
