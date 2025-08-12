@@ -16,6 +16,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [2.1.3] - 2025-08-12
+
+### Fixed
+
+- Added error boundaries to the Archive browser, allowing it to render even when an error has occured.
+- Added back a button in the settings to open the archives.
+
 ## [2.1.2] - 2025-08-10
 
 ### Fixed
