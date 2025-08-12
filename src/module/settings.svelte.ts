@@ -2,6 +2,7 @@ import type { Data } from "$lib/utils";
 import type { SettingRegistration } from "foundry-pf2e/foundry/client/helpers/client-settings.mjs";
 import { readonly } from "$lib/utils";
 import { id } from "moduleJSON";
+import { ArchiveMenu } from "./Archive";
 
 export interface Settings {
 	replaceButtons: boolean;
@@ -67,6 +68,15 @@ Hooks.once("init", () => {
 	for (const set of setData) {
 		game.settings.register(id, set.key, set);
 	}
+
+	game.settings.registerMenu(id, "chat-archive", {
+		name: "vauxs-archives.settings.archive.title",
+		hint: "vauxs-archives.settings.archive.hint",
+		label: "vauxs-archives.settings.archive.button",
+		icon: "fas fa-message",
+		restricted: false,
+		type: ArchiveMenu,
+	});
 
 	for (const set of setData) {
 		const setting = game.settings.get(id, set.key);

@@ -2,6 +2,11 @@
 	"vauxs-archives": {
 		"title": "Vauxs' Archives",
 		"settings": {
+			"archive": {
+				"title": "Open Chat Archives",
+				"hint": "Opens a separate window to browse, create, or add chat archives.",
+				"button": "Open"
+			},
 			"replaceButtons": {
 				"title": "Replace the Export Chat Log Button",
 				"hint": "Replaces the \"Export Chat Log\" button in chat with \"Open Vauxs Archives\"."
